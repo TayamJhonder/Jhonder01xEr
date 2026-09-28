@@ -25,7 +25,7 @@
             <a href="#skills">Skills</a>
             <span class="separator">|</span>
             <a href="#projects">PROJECTS</a>
-            <a href="#parcours">PARCOURS</a>
+            <a href="#parcours">PROGRESS</a>
             <a href="#events">EVENTS</a>
             <a href="#certs">CERTS</a>
             <a href="#">CV</a>
@@ -71,10 +71,10 @@
             </div>
         </div>
 
-        <!-- Profile Image with Pixel Particle Animation -->
+        <!-- Profile Image (Responsive: jhonder2.png sa mobile, jhonder.png sa desktop) -->
         <div class="profile-image-container">
-            <canvas id="particleCanvas" class="particle-canvas"></canvas>
-            <img src="jhonder.png" alt="Profile Picture" id="profileImage" class="profile-img">
+            <img src="jhonder.png" alt="Profile Picture" class="profile-img desktop-img">
+            <img src="jhonder2.png" alt="Profile Picture" class="profile-img mobile-img">
         </div>
 
         <div class="info-right">
@@ -138,60 +138,171 @@
         </h2>
 
         <div class="method-steps">
-            <button class="step-btn active">● 01</button>
-            <button class="step-btn">● 02</button>
-            <button class="step-btn">● 03</button>
+            <button class="step-btn active" data-step="1">● 01</button>
+            <button class="step-btn" data-step="2">● 02</button>
+            <button class="step-btn" data-step="3">● 03</button>
         </div>
 
-        <div class="method-subheader">
-            <div class="subheader-left">
-                <span class="step-number">01</span>
-                <span class="red-line-short"></span>
-                <h3>ANALYSIS, ARCHITECTURE &amp; PLANNING</h3>
-            </div>
-            <div class="subheader-right">
-                <span>DEV.CYCLE_0X</span>
-                <span class="dash">————</span>
-                <span>STAGE // 01</span>
-            </div>
-        </div>
-
-        <div class="method-content">
-            <div class="method-card card-left">
-                <div class="card-header">
-                    <span class="red-dot"></span> DEV.PRINCIPLE // 01
-                    <span class="card-tag">LAT.01</span>
+        <!-- ===== STEP 1 ===== -->
+        <div class="method-panel active" data-panel="1">
+            <div class="method-subheader">
+                <div class="subheader-left">
+                    <span class="step-number">01</span>
+                    <span class="red-line-short"></span>
+                    <h3>ANALYSIS, ARCHITECTURE &amp; PLANNING</h3>
                 </div>
-                <h4 class="card-title">PLAN BEFORE YOU CODE. UNDERSTAND BEFORE YOU BUILD. START BEFORE YOU'RE READY.</h4>
-                <p class="card-text">
-                    Every project starts with understanding the problem. I analyze requirements, plan the architecture, and choose the right tools — whether it's a <em>Java application</em> for tourist information, a <em>C# Windows Forms</em> calculator, or a <em>PHP voting system</em>. Planning first saves hours of debugging later.
-                </p>
-            </div>
-
-            <div class="method-portrait">
-                <img src="jhonder.png" alt="Portrait">
-            </div>
-
-            <div class="method-card card-right">
-                <div class="card-header right-header">
-                    <span class="card-tag">STACK // 2026</span>
-                    <span class="arch-label">TECHNOLOGY <span class="red-dot"></span></span>
+                <div class="subheader-right">
+                    <span>DEV.CYCLE_0X</span>
+                    <span class="dash">————</span>
+                    <span>STAGE // 01</span>
                 </div>
-                <h4 class="card-title">JAVA · C# · C++ · JAVASCRIPT · PHP · HTML · CSS · WEBGL</h4>
-                <p class="card-text">
-                    I build <strong>desktop applications</strong> (Java, C# Windows Forms), <strong>web applications</strong> (PHP, HTML, CSS, JavaScript), and <strong>interactive interfaces</strong> (WebGL, particle effects, animations). From <em>Sorsogon Tourist Spot App</em> to <em>Pork Hub</em> — I turn ideas into working software.
-                </p>
+            </div>
+
+            <div class="method-content">
+                <div class="method-card card-left">
+                    <div class="card-header">
+                        <span class="red-dot"></span> DEV.PRINCIPLE // 01
+                        <span class="card-tag">LAT.01</span>
+                    </div>
+                    <h4 class="card-title">PLAN BEFORE YOU CODE. UNDERSTAND BEFORE YOU BUILD. START BEFORE YOU'RE READY.</h4>
+                    <p class="card-text">
+                        Every project starts with understanding the problem. I analyze requirements, plan the architecture, and choose the right tools — whether it's a <em>Java application</em> for tourist information, a <em>C# Windows Forms</em> calculator, or a <em>PHP voting system</em>. Planning first saves hours of debugging later.
+                    </p>
+                </div>
+
+                <div class="method-portrait">
+                    <img src="sideview.png" alt="Methodology Step 1">
+                </div>
+
+                <div class="method-card card-right">
+                    <div class="card-header right-header">
+                        <span class="card-tag">STACK // 2026</span>
+                        <span class="arch-label">TECHNOLOGY <span class="red-dot"></span></span>
+                    </div>
+                    <h4 class="card-title">JAVA · C# · C++ · JAVASCRIPT · PHP · HTML · CSS · WEBGL</h4>
+                    <p class="card-text">
+                        I build <strong>desktop applications</strong> (Java, C# Windows Forms), <strong>web applications</strong> (PHP, HTML, CSS, JavaScript), and <strong>interactive interfaces</strong> (WebGL, particle effects, animations). From <em>Sorsogon Tourist Spot App</em> to <em>Pork Hub</em> — I turn ideas into working software.
+                    </p>
+                </div>
+            </div>
+
+            <div class="method-footer">
+                <div class="footer-left">JHONDER TAYAM</div>
+                <div class="footer-center">
+                    <span class="dash">————</span>
+                    <span>DEV.CYCLE_0X</span>
+                    <span class="dash">————</span>
+                </div>
+                <div class="footer-right">01 / 03</div>
             </div>
         </div>
 
-        <div class="method-footer">
-            <div class="footer-left">JHONDER TAYAM</div>
-            <div class="footer-center">
-                <span class="dash">————</span>
-                <span>DEV.CYCLE_0X</span>
-                <span class="dash">————</span>
+        <!-- ===== STEP 2 ===== -->
+        <div class="method-panel" data-panel="2">
+            <div class="method-subheader">
+                <div class="subheader-left">
+                    <span class="step-number">02</span>
+                    <span class="red-line-short"></span>
+                    <h3>DEVELOPMENT, CODING &amp; IMPLEMENTATION</h3>
+                </div>
+                <div class="subheader-right">
+                    <span>DEV.CYCLE_0X</span>
+                    <span class="dash">————</span>
+                    <span>STAGE // 02</span>
+                </div>
             </div>
-            <div class="footer-right">01 / 03</div>
+
+            <div class="method-content">
+                <div class="method-card card-left">
+                    <div class="card-header">
+                        <span class="red-dot"></span> DEV.PRINCIPLE // 02
+                        <span class="card-tag">LAT.02</span>
+                    </div>
+                    <h4 class="card-title">WRITE CLEAN CODE. BUILD SMALL. TEST OFTEN. ITERATE FAST.</h4>
+                    <p class="card-text">
+                        Once the plan is solid, I move into actual development. I write <em>clean, readable code</em>, break features into small chunks, and test every module before moving on. Whether it's a <em>C# Windows Forms</em> desktop app or a <em>PHP web system</em>, I make sure every line has a purpose.
+                    </p>
+                </div>
+
+                <div class="method-portrait">
+                    <img src="My COFFEE.png" alt="Methodology Step 2">
+                </div>
+
+                <div class="method-card card-right">
+                    <div class="card-header right-header">
+                        <span class="card-tag">TOOLS // DAILY</span>
+                        <span class="arch-label">ENVIRONMENT <span class="red-dot"></span></span>
+                    </div>
+                    <h4 class="card-title">VS CODE · VISUAL STUDIO · GIT · TERMUX · ACODE · TREBEDIT</h4>
+                    <p class="card-text">
+                        I work across <strong>desktop and mobile environments</strong> — from <em>Visual Studio</em> for C# Windows Forms, to <em>VS Code</em> for web development, and even <em>Termux/Acode</em> for coding on the go. Version control with <strong>Git &amp; GitHub</strong> keeps every project organized and trackable.
+                    </p>
+                </div>
+            </div>
+
+            <div class="method-footer">
+                <div class="footer-left">JHONDER TAYAM</div>
+                <div class="footer-center">
+                    <span class="dash">————</span>
+                    <span>DEV.CYCLE_0X</span>
+                    <span class="dash">————</span>
+                </div>
+                <div class="footer-right">02 / 03</div>
+            </div>
+        </div>
+
+        <!-- ===== STEP 3 ===== -->
+        <div class="method-panel" data-panel="3">
+            <div class="method-subheader">
+                <div class="subheader-left">
+                    <span class="step-number">03</span>
+                    <span class="red-line-short"></span>
+                    <h3>TESTING, DEBUGGING &amp; DEPLOYMENT</h3>
+                </div>
+                <div class="subheader-right">
+                    <span>DEV.CYCLE_0X</span>
+                    <span class="dash">————</span>
+                    <span>STAGE // 03</span>
+                </div>
+            </div>
+
+            <div class="method-content">
+                <div class="method-card card-left">
+                    <div class="card-header">
+                        <span class="red-dot"></span> DEV.PRINCIPLE // 03
+                        <span class="card-tag">LAT.03</span>
+                    </div>
+                    <h4 class="card-title">TEST EVERYTHING. FIX WHAT BREAKS. SHIP WHAT WORKS.</h4>
+                    <p class="card-text">
+                        After coding comes the most critical part — <em>testing and debugging</em>. I test edge cases, validate user inputs, and make sure the system behaves correctly under different scenarios. A feature isn't done until it's been tested, broken, fixed, and tested again.
+                    </p>
+                </div>
+
+                <div class="method-portrait">
+                    <img src="laptop.png" alt="Methodology Step 3">
+                </div>
+
+                <div class="method-card card-right">
+                    <div class="card-header right-header">
+                        <span class="card-tag">DELIVERY // FINAL</span>
+                        <span class="arch-label">DEPLOYMENT <span class="red-dot"></span></span>
+                    </div>
+                    <h4 class="card-title">VERCEL · GITHUB · CI/CD · DOCUMENTATION · HANDOVER</h4>
+                    <p class="card-text">
+                        I deploy projects through <strong>Vercel</strong> for web apps and <strong>GitHub</strong> for source control. Every project comes with <em>clean documentation</em>, a proper README, and a working demo. Deployment isn't the end — it's the moment the project starts living in the real world.
+                    </p>
+                </div>
+            </div>
+
+            <div class="method-footer">
+                <div class="footer-left">JHONDER TAYAM</div>
+                <div class="footer-center">
+                    <span class="dash">————</span>
+                    <span>DEV.CYCLE_0X</span>
+                    <span class="dash">————</span>
+                </div>
+                <div class="footer-right">03 / 03</div>
+            </div>
         </div>
     </section>
 
@@ -514,7 +625,7 @@
         </div>
 
         <h2 class="parcours-title">
-            <span class="solid">PARCOURS</span><br>
+            <span class="solid">CCDI</span><br>
             <span class="outline">ACADEMIC</span>
         </h2>
 
@@ -687,7 +798,7 @@
 
         <div class="events-list">
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
                     <h4 class="event-title">CS50x Journey 2026 — Harvard's Intro to Computer Science</h4>
                     <div class="event-tags">
@@ -699,7 +810,7 @@
             </div>
 
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
                     <h4 class="event-title">Joined Hall of Codes — GitHub Organization</h4>
                     <div class="event-tags">
@@ -711,7 +822,7 @@
             </div>
 
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
                     <h4 class="event-title">Capstone Project BSCS 3 — Real-World Application Development</h4>
                     <div class="event-tags">
@@ -723,7 +834,7 @@
             </div>
 
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
                     <h4 class="event-title">ExamChecker Backend — Python Backend Development</h4>
                     <div class="event-tags">
@@ -735,7 +846,7 @@
             </div>
 
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
                     <h4 class="event-title">CS50: Introduction to Computer Science — Harvard University</h4>
                     <div class="event-tags">
@@ -746,9 +857,9 @@
             </div>
 
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
-                    <h4 class="event-title">VibCoding Course Completion</h4>
+                    <h4 class="event-title">VibeCoding Course Completion</h4>
                     <div class="event-tags">
                         <span class="event-tag cert">CERTIFICATION</span>
                         <span class="event-tag date">2024</span>
@@ -757,7 +868,7 @@
             </div>
 
             <div class="event-item">
-                <div class="event-icon">📌</div>
+                <div class="event-icon"></div>
                 <div class="event-content">
                     <h4 class="event-title">Game Development Course</h4>
                     <div class="event-tags">
@@ -914,19 +1025,19 @@
         <div class="certs-grid">
             <div class="cert-card clickable"
                  data-image="vibecoding.jpg"
-                 data-title="VibCoding"
-                 data-issuer="VibCoding Platform"
-                 data-desc="Natutunan ko ito sa pamamagitan ng online course sa VibCoding. Dito ko na-develop yung fundamentals ng programming — variables, loops, functions, at basic problem-solving. Sinimulan ko ito noong first year college ko para mas mapalakas yung foundation ko sa coding.">
+                 data-title="VibeCoding"
+                 data-issuer="VibeCoding Platform"
+                 data-desc="I learned this through an online course on VibeCoding. Here I developed the fundamentals of programming — variables, loops, functions, and basic problem-solving. I started this during my first year of college to strengthen my foundation in coding.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.01</span>
-                    <span class="cert-platform">VIBCODING</span>
+                    <span class="cert-platform">VIBECODING</span>
                 </div>
                 <div class="cert-image-wrapper">
-                    <img src="vibecoding.jpg" alt="VibCoding Certificate">
+                    <img src="vibecoding.jpg" alt="VibeCoding Certificate">
                 </div>
-                <h4 class="cert-title">VibCoding</h4>
+                <h4 class="cert-title">VibeCoding</h4>
                 <div class="cert-meta">
-                    <span class="cert-issuer">VibCoding</span>
+                    <span class="cert-issuer">VibeCoding</span>
                     <span class="cert-date">2024 <span class="red-dot-small"></span> VERIFIED</span>
                 </div>
             </div>
@@ -935,7 +1046,7 @@
                  data-image="gamedev.jpg"
                  data-title="Game Development"
                  data-issuer="GameDev Course"
-                 data-desc="Isa ito sa mga pinaka-enjoy kong certificate. Natutunan ko yung basics ng game development — game loops, physics, at interactive mechanics. Ginamit ko yung skills na ito sa pag-explore ng Unity at C# para sa game projects ko.">
+                 data-desc="This is one of the certificates I enjoyed the most. I learned the basics of game development — game loops, physics, and interactive mechanics. I used these skills to explore Unity and C# for my game projects.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.02</span>
                     <span class="cert-platform">GAMEDEV</span>
@@ -954,7 +1065,7 @@
                  data-image="java.jpg"
                  data-title="Java Programming"
                  data-issuer="Online Course"
-                 data-desc="Nakuha ko ito habang nag-aaral ako ng Java para sa Sorsogon Tourist Spot App. Dito ko natutunan ang OOP concepts — classes, objects, inheritance, at exception handling. Malaking tulong ito sa mga Java projects ko.">
+                 data-desc="I earned this while studying Java for the Sorsogon Tourist Spot App. Here I learned OOP concepts — classes, objects, inheritance, and exception handling. This was a big help for my Java projects.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.03</span>
                     <span class="cert-platform">JAVA</span>
@@ -973,7 +1084,7 @@
                  data-image="jquery.jpg"
                  data-title="jQuery Fundamentals"
                  data-issuer="Online Course"
-                 data-desc="Natutunan ko yung jQuery para sa web development. DOM manipulation, event handling, at AJAX basics — gamit ito sa mga web projects ko. Kahit modern na ang JavaScript ngayon, mahalaga pa rin ang jQuery fundamentals.">
+                 data-desc="I learned jQuery for web development. DOM manipulation, event handling, and AJAX basics — I used these in my web projects. Even though modern JavaScript is more common today, jQuery fundamentals are still valuable.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.04</span>
                     <span class="cert-platform">JQUERY</span>
@@ -992,7 +1103,7 @@
                  data-image="c++.png"
                  data-title="C++ Programming"
                  data-issuer="Online Course"
-                 data-desc="Isa ito sa pinaka-importanteng certificate ko. Dito ko natutunan ang data structures, algorithms, at memory management. Ginagamit ko ito araw-araw sa problem solving at sa mga CS subjects ko.">
+                 data-desc="This is one of my most important certificates. Here I learned data structures, algorithms, and memory management. I use these skills every day for problem-solving and my CS subjects.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.05</span>
                     <span class="cert-platform">C++</span>
@@ -1011,7 +1122,7 @@
                  data-image="html.png"
                  data-title="HTML Fundamentals"
                  data-issuer="Online Course"
-                 data-desc="Dito nagsimula yung web development journey ko. Natutunan ko yung semantic markup, structure, at accessibility. Foundation ito ng lahat ng web projects ko — mula Pork Hub hanggang sa portfolio na ito.">
+                 data-desc="This is where my web development journey began. I learned semantic markup, structure, and accessibility. This is the foundation of all my web projects — from Pork Hub to this portfolio.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.06</span>
                     <span class="cert-platform">HTML</span>
@@ -1030,7 +1141,7 @@
                  data-image="css.png"
                  data-title="CSS Fundamentals"
                  data-issuer="Online Course"
-                 data-desc="Natutunan ko yung CSS para gawing maganda at responsive yung mga website. Flexbox, Grid, animations, at media queries — lahat ng ito ginagamit ko sa bawat web project ko, kasama na yung portfolio na ito.">
+                 data-desc="I learned CSS to make websites beautiful and responsive. Flexbox, Grid, animations, and media queries — I use all of these in every web project I build, including this portfolio.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.07</span>
                     <span class="cert-platform">CSS</span>
@@ -1049,7 +1160,7 @@
                  data-image="js.png"
                  data-title="JavaScript Fundamentals"
                  data-issuer="Online Course"
-                 data-desc="Pinaka-versatile na language na natutunan ko. DOM manipulation, event handling, at interactive UI — lahat ng ito ginagamit ko sa web projects ko. Dito rin ako nag-explore ng WebGL para sa particle effects at animations.">
+                 data-desc="The most versatile language I've learned. DOM manipulation, event handling, and interactive UI — I use all of these in my web projects. This is also where I explored WebGL for particle effects and animations.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.08</span>
                     <span class="cert-platform">JAVASCRIPT</span>
@@ -1068,7 +1179,7 @@
                  data-image="cs50.png"
                  data-title="CS50: Introduction to Computer Science"
                  data-issuer="Harvard University"
-                 data-desc="Ito yung pinaka-prestigious na certificate ko. CS50 ang pinaka-paboritong course ko — dito ko natutunan ang Computer Science fundamentals: algorithms, data structures, memory, at problem solving. Ginamit ko yung CS50x journey ko para mas mapalalim yung understanding ko sa programming. Solid foundation ito para sa lahat ng projects ko.">
+                 data-desc="This is my most prestigious certificate. CS50 is my favorite course — here I learned Computer Science fundamentals: algorithms, data structures, memory, and problem-solving. I used my CS50x journey to deepen my understanding of programming. This is a solid foundation for all my projects.">
                 <div class="cert-card-header">
                     <span class="cert-id">ID.09</span>
                     <span class="cert-platform">HARVARD</span>
@@ -1164,7 +1275,7 @@
                 <div class="cert-modal-desc-wrapper">
                     <span class="red-line-vertical"></span>
                     <p class="cert-modal-desc" id="certModalDesc">
-                        Description kung paano nakuha yung certificate.
+                        Certificate description.
                     </p>
                 </div>
             </div>
