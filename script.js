@@ -115,13 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* =====================================================
-       4. IRON FILINGS EFFECT (Fullscreen)
-       =====================================================
-       - Canvas ay FULLSCREEN (position: fixed)
-       - Particles galing sa LABAS NG BUONG SCREEN (desktop + mobile)
-       - Auto-plays after 1 second
-       - Assembles into the profile picture (jhonder.png)
-       - Runs only ONCE per page load
+       4. IRON FILINGS EFFECT (Naka-attach sa Hero Section)
        ===================================================== */
 
     (function initIronFilings() {
@@ -161,12 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
             activeImg: null
         };
 
-        // =====================================================
-        // SIZING - Fullscreen canvas (100vw x 100vh)
-        // =====================================================
         function resizeCanvas() {
-            const W = window.innerWidth;
-            const H = window.innerHeight;
+            const parent = canvas.parentElement;
+            const W = parent ? parent.clientWidth : window.innerWidth;
+            const H = parent ? parent.clientHeight : window.innerHeight;
 
             canvas.width = W * DPR;
             canvas.height = H * DPR;
@@ -181,17 +173,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const activeImg = getActiveImage();
             if (!activeImg) return;
 
-            // Image position sa SCREEN coords (dahil fullscreen yung canvas)
-            const r = activeImg.getBoundingClientRect();
-            imgRect.x = r.left;
-            imgRect.y = r.top;
-            imgRect.w = r.width;
-            imgRect.h = r.height;
+            const canvasRect = canvas.getBoundingClientRect();
+            const imgRectRaw = activeImg.getBoundingClientRect();
+
+            imgRect.x = imgRectRaw.left - canvasRect.left;
+            imgRect.y = imgRectRaw.top - canvasRect.top;
+            imgRect.w = imgRectRaw.width;
+            imgRect.h = imgRectRaw.height;
         }
 
-        // =====================================================
-        // START
-        // =====================================================
         function start() {
             resizeCanvas();
             computeImageRect();
@@ -202,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Hide yung image muna
             activeImg.style.transition = 'opacity 0.2s ease-out';
             activeImg.style.opacity = '0';
 
@@ -215,10 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, START_DELAY);
         }
 
-        // =====================================================
-        // INIT PARTICLES
-        // GALING SA LABAS NG BUONG SCREEN (desktop + mobile)
-        // =====================================================
         function initParticles(img) {
             const iw = img.naturalWidth;
             const ih = img.naturalHeight;
@@ -242,18 +227,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const scaleY = imgRect.h / ih;
             const particleSize = Math.max(1.5, SAMPLE_STEP * scaleX * 1.4);
 
-            // Image center (SCREEN coords)
             const cx = imgRect.x + imgRect.w / 2;
             const cy = imgRect.y + imgRect.h / 2;
 
-            // =====================================================
-            // SCREEN DIAGONAL - para labas ng BUONG screen yung start
-            // =====================================================
-            const screenW = window.innerWidth;
-            const screenH = window.innerHeight;
+            const screenW = canvas.clientWidth || window.innerWidth;
+            const screenH = canvas.clientHeight || window.innerHeight;
             const screenDiag = Math.sqrt(screenW * screenW + screenH * screenH);
 
-            // 0.65 = guarantee na lampas sa screen edge (lahat ng panig)
             const minDist = screenDiag * 0.65;
             const maxDist = screenDiag * 0.95;
 
@@ -269,32 +249,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     if (a < 20) continue;
 
-                    // Target position (final) - screen coords
                     const tx = imgRect.x + x * scaleX + (SAMPLE_STEP * scaleX) / 2;
                     const ty = imgRect.y + y * scaleY + (SAMPLE_STEP * scaleY) / 2;
 
-                    // Direction mula image center papuntang target
                     let dirX = tx - cx;
                     let dirY = ty - cy;
                     const dirLen = Math.sqrt(dirX * dirX + dirY * dirY) + 0.001;
                     dirX /= dirLen;
                     dirY /= dirLen;
 
-                    // Random variance
                     const angleVar = (Math.random() - 0.5) * 1.0;
                     const cosA = Math.cos(angleVar);
                     const sinA = Math.sin(angleVar);
                     const fdx = dirX * cosA - dirY * sinA;
                     const fdy = dirX * sinA + dirY * cosA;
 
-                    // Distance from image center - LABAS NG SCREEN
                     const distFromCenter = minDist + Math.random() * (maxDist - minDist);
 
-                    // Start position - outside screen
                     const sx = cx + fdx * distFromCenter;
                     const sy = cy + fdy * distFromCenter;
 
-                    // Precomputed color
                     const alpha = a / 255;
                     const colorString = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
 
@@ -321,9 +295,6 @@ document.addEventListener('DOMContentLoaded', function() {
             state.activeImg = img;
         }
 
-        // =====================================================
-        // ANIMATION LOOP
-        // =====================================================
         function animate() {
             if (!state.running) return;
 
@@ -331,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const elapsed = now - state.phaseStart;
             state.progress = Math.min(1, elapsed / ASSEMBLE_DURATION);
 
-            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             updateParticles();
             drawParticles();
@@ -345,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 setTimeout(function() {
-                    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                 }, 250);
 
                 return;
@@ -354,9 +325,6 @@ document.addEventListener('DOMContentLoaded', function() {
             requestAnimationFrame(animate);
         }
 
-        // =====================================================
-        // UPDATE PARTICLES
-        // =====================================================
         function updateParticles() {
             const t = state.progress;
             const len = particles.length;
@@ -387,13 +355,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // =====================================================
-        // DRAW PARTICLES
-        // =====================================================
         function drawParticles() {
             const len = particles.length;
-            const W = window.innerWidth;
-            const H = window.innerHeight;
+            const W = canvas.clientWidth || window.innerWidth;
+            const H = canvas.clientHeight || window.innerHeight;
 
             for (let i = 0; i < len; i++) {
                 const p = particles[i];
@@ -421,9 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // =====================================================
-        // WAIT FOR IMAGES
-        // =====================================================
         function waitAndStart() {
             const activeImg = getActiveImage();
             if (!activeImg) return;
@@ -438,9 +400,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // =====================================================
-        // WINDOW RESIZE
-        // =====================================================
         let resizeTimeout;
         window.addEventListener('resize', function() {
             if (state.finished) return;

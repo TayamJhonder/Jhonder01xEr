@@ -56,12 +56,15 @@
         </nav>
     </div>
 
-    <!-- ================= FULLSCREEN IRON FILINGS CANVAS ================= -->
-    <!-- Naka-FIXED sa buong screen - sakop lahat ng monitor -->
-    <canvas class="iron-filings-canvas" id="ironFilingsCanvas"></canvas>
+    <!-- ================= BACKGROUND IMAGE GRID MARQUEE (Fixed sa buong website) ================= -->
+    <div class="bg-marquee-container" id="bgMarqueeContainer"></div>
 
     <!-- ================= HERO SECTION ================= -->
     <main class="hero-section" id="top">
+
+        <!-- IRON FILINGS CANVAS — naka-attach sa HERO SECTION (naiiwan pag nag-scroll) -->
+        <canvas class="iron-filings-canvas" id="ironFilingsCanvas"></canvas>
+
         <div class="giant-text">JHONDER</div>
 
         <div class="stats-left">
@@ -75,7 +78,6 @@
             </div>
         </div>
 
-        <!-- Profile Image -->
         <div class="profile-image-container" id="profileContainer">
             <img src="jhonder.png" alt="Profile Picture" class="profile-img desktop-img" id="profileImgDesktop">
             <img src="jhonder2.png" alt="Profile Picture" class="profile-img mobile-img" id="profileImgMobile">
@@ -1285,6 +1287,7 @@
 
     <!-- ================= JAVASCRIPT ================= -->
     <script src="script.js"></script>
+    <script src="bg-filings.js"></script>
 
 </body>
 </html>
