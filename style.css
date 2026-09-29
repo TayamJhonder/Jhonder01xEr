@@ -663,13 +663,14 @@ a.cta-btn {
     align-items: center;
 }
 
+/* ===== FIX: FULL COLOR NA ANG SIMP.PNG ===== */
 .about-graphic img {
     width: 100%;
     max-width: 400px;
     height: auto;
-    opacity: 0.8;
+    opacity: 1;
     display: block;
-    filter: brightness(0.3) invert(0.9);
+    /* Tinanggal ang filter para lumabas ang original color */
 }
 
 .about-text {
@@ -2662,10 +2663,18 @@ a.cta-btn {
     }
 
     .about-section { padding: 4rem 1.5rem; }
-    .about-title { font-size: 25vw; }
+    /* ===== FIX: /ABOUT TITLE FIT SA SCREEN ===== */
+    .about-title { 
+        font-size: 18vw; 
+        word-break: break-word;
+        line-height: 0.85;
+    }
     .about-content { grid-template-columns: 1fr; gap: 2rem; }
     .about-graphic { order: 2; }
-    .about-graphic img { max-width: 200px; }
+    .about-graphic img { 
+        max-width: 200px; 
+        /* Walang filter para full color */
+    }
     .about-text { order: 1; }
     .about-text p { font-size: 0.95rem; }
 
@@ -2689,8 +2698,17 @@ a.cta-btn {
     .project-card { padding: 1rem; }
 
     .skills-section { padding: 4rem 1.5rem 2rem 1.5rem; }
-    .skills-title { font-size: 22vw; margin-bottom: 1rem; }
-    .skills-title .outline { -webkit-text-stroke: 1px #fff; text-stroke: 1px #fff; }
+    /* ===== FIX: ARSENAL TITLE FIT SA SCREEN ===== */
+    .skills-title { 
+        font-size: 18vw; 
+        margin-bottom: 1rem;
+        word-break: break-word;
+        line-height: 0.85;
+    }
+    .skills-title .outline { 
+        -webkit-text-stroke: 2px #fff; 
+        text-stroke: 2px #fff; 
+    }
     .skills-description { position: relative; top: auto; right: auto; max-width: 100%; margin-bottom: 2rem; }
     .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .skills-footer { flex-direction: column; gap: 0.75rem; text-align: center; }
@@ -2838,6 +2856,10 @@ a.cta-btn {
 
     .mobile-nav-links a { font-size: 1.15rem; }
     .mobile-menu { width: 90%; }
+
+    /* ===== EXTRA FIX PARA SA MALIIT NA SCREEN ===== */
+    .about-title { font-size: 16vw; }
+    .skills-title { font-size: 16vw; }
 }
 
 @media (max-width: 380px) {
@@ -2855,4 +2877,8 @@ a.cta-btn {
         height: 34px;
         font-size: 1rem;
     }
+
+    /* ===== EXTRA FIX PARA SA PINAKAMALIIT NA SCREEN ===== */
+    .about-title { font-size: 15vw; }
+    .skills-title { font-size: 15vw; }
 }
