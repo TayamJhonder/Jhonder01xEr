@@ -2,8 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hall Of Codes - Jhonder Tayam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- ================= PRIMARY SEO ================= -->
+    <title>Jhonder Tayam — CCDI | Hall of Codes</title>
+    <meta name="description" content="Jhonder Tayam — System Analyst and Software & App Developer based in Sorsogon City, Philippines. Member of Hall of Codes. Specializing in Java, C#, C++, JavaScript, PHP, WebGL, and modern application development.">
+    <meta name="keywords" content="who is jhonder taya?, Who is Jhonder Tayam?, Jhonder Tayam, Jhonder, TayamJhonder, System Analyst, Software Developer, App Developer, Sorsogon, Philippines, Hall of Codes, CCDI, Java Developer, C# Developer, Web Developer, Portfolio">
+    <meta name="author" content="Jhonder Tayam">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://jhonder01xer.vercel.app/">
+    
+    <!-- ================= FAVICON ================= -->
+    <link rel="icon" type="image/png" href="jhonder.png">
+    <link rel="shortcut icon" type="image/png" href="jhonder.png">
+    <link rel="apple-touch-icon" href="jhonder.png">
+    
+    <!-- ================= OPEN GRAPH ================= -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jhonder01xer.vercel.app/">
+    <meta property="og:title" content="Jhonder Tayam — Student @CCDI-Computer Communication Development Institute">
+    <meta property="og:description" content="Student @CCDI | Web Developer based in Sorsogon City, Philippines. Member of Hall of Codes.">
+    <meta property="og:image" content="https://jhonder01xer.vercel.app/jhonder.png">
+    <meta property="og:image:secure_url" content="https://jhonder01xer.vercel.app/jhonder.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Jhonder Tayam Profile">
+    <meta property="og:site_name" content="Jhonder Tayam Portfolio">
+    <meta property="og:locale" content="en_PH">
+    
+    <!-- ================= TWITTER CARD ================= -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jhonder Tayam — System Analyst & Software Developer">
+    <meta name="twitter:description" content="Student @CCDI-Computer Communication Development Institute based in Sorsogon City, Philippines.">
+    <meta name="twitter:image" content="https://jhonder01xer.vercel.app/jhonder.png">
+    <meta name="twitter:image:alt" content="Jhonder Tayam Profile">
+    
+    <!-- ================= STRUCTURED DATA ================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jhonder Tayam",
+      "alternateName": ["Jhonder", "TayamJhonder", "Jhonder Tayam"],
+      "url": "https://jhonder01xer.vercel.app/",
+      "image": "https://jhonder01xer.vercel.app/jhonder.png",
+      "jobTitle": "Student @CCDI-Computer Communication Development Institute",
+      "description": "Student @CCDI-Computer Communication Development Institute based in Sorsogon City, Philippines. Member of Hall of Codes.",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Hall of Codes",
+        "url": "https://github.com/TayamJhonder"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Computer Communication Development Institute"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sorsogon City",
+        "addressRegion": "Sorsogon",
+        "addressCountry": "Philippines"
+      },
+      "sameAs": [
+        "https://github.com/TayamJhonder"
+      ],
+      "knowsAbout": ["Java", "C#", "C++", "JavaScript", "PHP", "Python", "WebGL", "HTML", "CSS", "System Analysis", "Software Development"]
+    }
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
@@ -14,9 +81,7 @@
     <!-- ================= NAVIGATION BAR ================= -->
     <header class="navbar" id="navbar">
         <a href="#top" class="logo" id="logoLink">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 22H22L12 2Z" stroke="black" stroke-width="2"/>
-            </svg>
+            <img src="logo.png" alt="Jhonder Tayam Logo" class="logo-img">
         </a>
 
         <nav class="nav-links" id="navLinks">
@@ -49,20 +114,18 @@
             <a href="#method">Method</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
-            <a href="#parcours">Parcours</a>
+            <a href="#parcours">Progress</a>
             <a href="#events">Events</a>
             <a href="#certs">Certs</a>
             <a href="#">CV</a>
         </nav>
     </div>
 
-    <!-- ================= BACKGROUND IMAGE GRID MARQUEE (Fixed sa buong website) ================= -->
+    <!-- ================= BG MARQUEE ================= -->
     <div class="bg-marquee-container" id="bgMarqueeContainer"></div>
 
     <!-- ================= HERO SECTION ================= -->
     <main class="hero-section" id="top">
-
-        <!-- IRON FILINGS CANVAS — naka-attach sa HERO SECTION (naiiwan pag nag-scroll) -->
         <canvas class="iron-filings-canvas" id="ironFilingsCanvas"></canvas>
 
         <div class="giant-text">JHONDER</div>
@@ -79,8 +142,8 @@
         </div>
 
         <div class="profile-image-container" id="profileContainer">
-            <img src="jhonder.png" alt="Profile Picture" class="profile-img desktop-img" id="profileImgDesktop">
-            <img src="jhonder2.png" alt="Profile Picture" class="profile-img mobile-img" id="profileImgMobile">
+            <img src="jhonder.png" alt="Jhonder Tayam Profile Picture" class="profile-img desktop-img" id="profileImgDesktop">
+            <img src="jhonder2.png" alt="Jhonder Tayam Profile Picture" class="profile-img mobile-img" id="profileImgMobile">
         </div>
 
         <div class="info-right">
@@ -100,7 +163,7 @@
         <div class="greeting-bottom">
             <h1>Hello,</h1>
             <p><span class="red-line"></span> It's JHONDER</p>
-            <a href="https://github.com/TayamJhonder" target="_blank" class="cta-btn">INITIATE SYSTEM ↗</a>
+            <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="cta-btn">INITIATE SYSTEM ↗</a>
         </div>
 
         <div class="scroll-indicator">
@@ -122,12 +185,12 @@
 
         <div class="about-content">
             <div class="about-graphic">
-                <img src="about.png" alt="About Arrow">
+                <img src="about.png" alt="About decorative arrow">
             </div>
 
             <div class="about-text">
                 <p>
-                    I’m <strong>JHONDER TAYAM</strong> — a System Analyst and Software & App Developer based in Sorsogon City, Philippines. I’m a proud member of <strong>HALL OF CODES</strong> and Scholar in OWWA program, currently studying at the Computer Communication Development Institute; and I am Former Personal Student Assistant of Administrator in our Institute. I specialize in building efficient systems, developing modern applications, and turning complex problems into clean, functional solutions.
+                    I'm <strong>JHONDER TAYAM</strong> — a System Analyst and Software & App Developer based in Sorsogon City, Philippines. I'm a proud member of <strong>HALL OF CODES</strong> and Scholar in OWWA program, currently studying at the Computer Communication Development Institute; and I am Former Personal Student Assistant of Administrator in our Institute. I specialize in building efficient systems, developing modern applications, and turning complex problems into clean, functional solutions.
                 </p>
             </div>
         </div>
@@ -176,7 +239,7 @@
                 </div>
 
                 <div class="method-portrait">
-                    <img src="sideview.png" alt="Methodology Step 1">
+                    <img src="sideview.png" alt="Methodology Step 1 illustration">
                 </div>
 
                 <div class="method-card card-right">
@@ -229,7 +292,7 @@
                 </div>
 
                 <div class="method-portrait">
-                    <img src="My COFFEE.png" alt="Methodology Step 2">
+                    <img src="My COFFEE.png" alt="Methodology Step 2 illustration">
                 </div>
 
                 <div class="method-card card-right">
@@ -282,7 +345,7 @@
                 </div>
 
                 <div class="method-portrait">
-                    <img src="laptop.png" alt="Methodology Step 3">
+                    <img src="laptop.png" alt="Methodology Step 3 illustration">
                 </div>
 
                 <div class="method-card card-right">
@@ -621,7 +684,7 @@
         </div>
     </section>
 
-    <!-- ================= PARCOURS (EDUCATION) SECTION ================= -->
+    <!-- ================= PARCOURS SECTION ================= -->
     <section class="parcours-section" id="parcours">
         <div class="parcours-top-label">
             <span class="red-dot"></span> ACADEMIC JOURNEY
@@ -770,7 +833,7 @@
         </div>
     </section>
 
-    <!-- ================= EVENTS & UPDATES SECTION ================= -->
+    <!-- ================= EVENTS SECTION ================= -->
     <section class="events-section" id="events">
         <div class="events-top-label">
             <span class="red-dot"></span> EVENTS &amp; UPDATES
@@ -784,7 +847,7 @@
         <div class="events-description">
             <span class="red-line-vertical"></span>
             <div class="events-author">
-                <img src="jhonder.png" alt="Author" class="events-author-img">
+                <img src="jhonder.png" alt="Jhonder Tayam Author" class="events-author-img">
                 <div class="events-author-info">
                     <span class="events-author-name">JHONDER</span>
                     <span class="events-author-role">Developer &amp; System Analyst</span>
@@ -893,7 +956,7 @@
         </div>
     </section>
 
-    <!-- ================= COMMIT HISTORY SECTION ================= -->
+    <!-- ================= COMMIT SECTION ================= -->
     <section class="commit-section" id="commit">
         <div class="commit-top-label">
             <span class="red-dot"></span> SOURCE CONTROL
@@ -997,7 +1060,7 @@
             <span class="source-control-label">SOURCE CONTROL // @TayamJhonder</span>
             <div class="commit-btn-group">
                 <a href="#projects" class="commit-btn-outline">VIEW PROJECTS ↗</a>
-                <a href="https://github.com/TayamJhonder" target="_blank" class="commit-btn-solid">VIEW PROFILE ↗</a>
+                <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="commit-btn-solid">VIEW PROFILE ↗</a>
             </div>
         </div>
     </section>
@@ -1205,7 +1268,7 @@
         </div>
     </section>
 
-    <!-- ================= GET IN TOUCH SECTION ================= -->
+    <!-- ================= CONTACT SECTION ================= -->
     <section class="contact-section" id="contact">
         <div class="contact-top-label">
             <span class="red-dot"></span> GET IN TOUCH
@@ -1221,7 +1284,7 @@
         </p>
 
         <div class="contact-links">
-            <a href="https://github.com/TayamJhonder" target="_blank" class="contact-link">
+            <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="contact-link">
                 <span class="contact-icon">⌥</span>
                 <div class="contact-info">
                     <span class="contact-label">GITHUB</span>
@@ -1239,7 +1302,7 @@
                 <span class="contact-arrow">↗</span>
             </a>
 
-            <a href="https://github.com/TayamJhonder" target="_blank" class="contact-link">
+            <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="contact-link">
                 <span class="contact-icon">◈</span>
                 <div class="contact-info">
                     <span class="contact-label">LOCATION</span>
