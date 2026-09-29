@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const ctx = canvas.getContext('2d');
         const DPR = Math.min(2, window.devicePixelRatio || 1);
 
-        const START_DELAY = 1000;
-        const ASSEMBLE_DURATION = 4500;
+        const START_DELAY = 10;
+        const ASSEMBLE_DURATION = 3800;
         const SAMPLE_STEP = 3;
 
         let particles = [];
