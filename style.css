@@ -17,6 +17,19 @@ body {
     width: 100%;
 }
 
+/* ================= FULLSCREEN IRON FILINGS CANVAS ================= */
+/* Naka-FIXED sa buong screen - sakop lahat ng monitor */
+.iron-filings-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 1;
+}
+
 /* ================= NAVIGATION BAR ================= */
 .navbar {
     display: flex;
@@ -237,7 +250,7 @@ body {
     color: #555;
 }
 
-/* ================= PROFILE IMAGE (Centered with JHONDER text) ================= */
+/* ================= PROFILE IMAGE ================= */
 .profile-image-container {
     position: absolute;
     top: 0;
@@ -262,6 +275,7 @@ body {
     position: relative;
     z-index: 3;
     pointer-events: auto;
+    transition: opacity 0.25s ease-out;
 }
 
 /* Hide mobile image on desktop */
@@ -592,7 +606,7 @@ a.cta-btn {
     color: #fff;
 }
 
-/* ================= METHOD PANEL (Tab System) ================= */
+/* ================= METHOD PANEL ================= */
 .method-panel {
     display: none;
     animation: fadeInPanel 0.4s ease;
@@ -1081,7 +1095,7 @@ a.cta-btn {
     color: #555;
 }
 
-/* ================= PARCOURS (EDUCATION) SECTION ================= */
+/* ================= PARCOURS SECTION ================= */
 .parcours-section {
     background-color: #f2f2f2;
     color: #111;
@@ -1308,7 +1322,7 @@ a.cta-btn {
     font-weight: 300;
 }
 
-/* ================= EVENTS & UPDATES SECTION ================= */
+/* ================= EVENTS SECTION ================= */
 .events-section {
     background-color: #f2f2f2;
     color: #111;
@@ -1493,43 +1507,13 @@ a.cta-btn {
     color: #555;
 }
 
-.event-tag.course {
-    border-color: #4F5D95;
-    color: #4F5D95;
-}
-
-.event-tag.community {
-    border-color: #178600;
-    color: #178600;
-}
-
-.event-tag.project {
-    border-color: #d94141;
-    color: #d94141;
-}
-
-.event-tag.cert {
-    border-color: #b07219;
-    color: #b07219;
-}
-
-.event-tag.recent {
-    border-color: #178600;
-    background-color: #e7f5e7;
-    color: #178600;
-}
-
-.event-tag.ongoing {
-    border-color: #d94141;
-    background-color: #fbe7e7;
-    color: #d94141;
-}
-
-.event-tag.date {
-    border-color: #ccc;
-    background-color: #f2f2f2;
-    color: #777;
-}
+.event-tag.course { border-color: #4F5D95; color: #4F5D95; }
+.event-tag.community { border-color: #178600; color: #178600; }
+.event-tag.project { border-color: #d94141; color: #d94141; }
+.event-tag.cert { border-color: #b07219; color: #b07219; }
+.event-tag.recent { border-color: #178600; background-color: #e7f5e7; color: #178600; }
+.event-tag.ongoing { border-color: #d94141; background-color: #fbe7e7; color: #d94141; }
+.event-tag.date { border-color: #ccc; background-color: #f2f2f2; color: #777; }
 
 .events-footer {
     display: flex;
@@ -1544,7 +1528,7 @@ a.cta-btn {
     color: #888;
 }
 
-/* ================= COMMIT HISTORY SECTION ================= */
+/* ================= COMMIT SECTION ================= */
 .commit-section {
     background-color: #f2f2f2;
     color: #111;
@@ -1579,10 +1563,7 @@ a.cta-btn {
     margin-bottom: 2rem;
 }
 
-.commit-title .solid {
-    color: #111;
-}
-
+.commit-title .solid { color: #111; }
 .commit-title .outline {
     color: transparent;
     -webkit-text-stroke: 2px #111;
@@ -1697,9 +1678,7 @@ a.cta-btn {
     padding-bottom: 0.5rem;
 }
 
-.graph-months span {
-    text-align: center;
-}
+.graph-months span { text-align: center; }
 
 .graph-squares {
     display: flex;
@@ -1744,9 +1723,7 @@ a.cta-btn {
     color: #666;
 }
 
-.legend-text {
-    color: #555;
-}
+.legend-text { color: #555; }
 
 .legend-scale {
     display: flex;
@@ -1882,10 +1859,7 @@ a.cta-btn {
     margin-bottom: 2rem;
 }
 
-.certs-title .solid {
-    color: #111;
-}
-
+.certs-title .solid { color: #111; }
 .certs-title .outline {
     color: transparent;
     -webkit-text-stroke: 2px #111;
@@ -2097,7 +2071,7 @@ a.cta-btn {
     box-shadow: 0 6px 20px rgba(217, 65, 65, 0.3);
 }
 
-/* ================= GET IN TOUCH SECTION ================= */
+/* ================= CONTACT SECTION ================= */
 .contact-section {
     background-color: #0a0a0a;
     color: #fff;
@@ -2132,10 +2106,7 @@ a.cta-btn {
     margin-bottom: 2rem;
 }
 
-.contact-title .solid {
-    color: #fff;
-}
-
+.contact-title .solid { color: #fff; }
 .contact-title .outline {
     color: transparent;
     -webkit-text-stroke: 2px #fff;
@@ -2243,14 +2214,10 @@ a.cta-btn {
     gap: 0.5rem;
 }
 
-.contact-footer .dash {
-    color: #555;
-}
+.contact-footer .dash { color: #555; }
 
 /* ================= CERTIFICATE MODAL ================= */
-.cert-card.clickable {
-    cursor: pointer;
-}
+.cert-card.clickable { cursor: pointer; }
 
 .cert-card.clickable:hover .cert-image-wrapper img {
     transform: scale(1.05);
@@ -2348,9 +2315,7 @@ a.cta-btn {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.cert-modal-body {
-    padding: 2rem;
-}
+.cert-modal-body { padding: 2rem; }
 
 .cert-modal-header {
     display: flex;
@@ -2420,23 +2385,11 @@ a.cta-btn {
 
 /* ================= RESPONSIVE (Mobile) ================= */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 1.5rem 1rem;
-    }
+    .navbar { padding: 1.5rem 1rem; }
+    .nav-links { display: none; }
+    .nav-right { gap: 1rem; }
+    .burger-btn { display: flex; }
 
-    .nav-links {
-        display: none;
-    }
-
-    .nav-right {
-        gap: 1rem;
-    }
-
-    .burger-btn {
-        display: flex;
-    }
-
-    /* ===== HERO Mobile — Vertical stack ===== */
     .hero-section {
         display: flex;
         flex-direction: column;
@@ -2463,7 +2416,6 @@ a.cta-btn {
         line-height: 1;
     }
 
-    /* ===== PROFILE IMAGE — Mobile (Bigger + Closer to "N") ===== */
     .profile-image-container {
         position: relative;
         top: auto;
@@ -2480,12 +2432,8 @@ a.cta-btn {
         pointer-events: auto;
     }
 
-    /* Hide desktop image on mobile */
-    .profile-image-container .desktop-img {
-        display: none;
-    }
+    .profile-image-container .desktop-img { display: none; }
 
-    /* Show mobile image on mobile — MAS MALAKI */
     .profile-image-container .mobile-img {
         display: block;
         position: relative;
@@ -2495,7 +2443,6 @@ a.cta-btn {
         transform-origin: top center;
     }
 
-    /* Stats — sa ilalim ng picture */
     .stats-left {
         order: 3;
         flex-direction: row;
@@ -2509,20 +2456,10 @@ a.cta-btn {
         text-align: center;
     }
 
-    .stat-item {
-        align-items: center;
-        text-align: center;
-    }
+    .stat-item { align-items: center; text-align: center; }
+    .stat-number { font-size: 2rem; }
+    .stat-label { font-size: 0.55rem; }
 
-    .stat-number {
-        font-size: 2rem;
-    }
-
-    .stat-label {
-        font-size: 0.55rem;
-    }
-
-    /* Info right — nasa ilalim ng stats */
     .info-right {
         order: 4;
         align-items: center;
@@ -2535,13 +2472,8 @@ a.cta-btn {
         width: 100%;
     }
 
-    .role-info,
-    .role-sub,
-    .location-tag {
-        max-width: 100%;
-    }
+    .role-info, .role-sub, .location-tag { max-width: 100%; }
 
-    /* Greeting — nasa ibaba */
     .greeting-bottom {
         order: 5;
         align-self: center;
@@ -2550,22 +2482,10 @@ a.cta-btn {
         width: 100%;
     }
 
-    .greeting-bottom h1 {
-        font-size: 2.5rem;
-    }
+    .greeting-bottom h1 { font-size: 2.5rem; }
+    .greeting-bottom p { justify-content: center; font-size: 1.2rem; }
+    .cta-btn { margin-left: auto; margin-right: auto; display: inline-block; }
 
-    .greeting-bottom p {
-        justify-content: center;
-        font-size: 1.2rem;
-    }
-
-    .cta-btn {
-        margin-left: auto;
-        margin-right: auto;
-        display: inline-block;
-    }
-
-    /* Scroll indicator — nasa dulo */
     .scroll-indicator {
         order: 6;
         align-self: center;
@@ -2573,417 +2493,94 @@ a.cta-btn {
         padding-bottom: 2rem;
     }
 
-    /* ===== ABOUT Mobile ===== */
-    .about-section {
-        padding: 4rem 1.5rem;
-    }
-
-    .about-title {
-        font-size: 25vw;
-    }
-
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .about-graphic {
-        order: 2;
-    }
-
-    .about-graphic img {
-        max-width: 200px;
-    }
-
-    .about-text {
-        order: 1;
-    }
-
-    .about-text p {
-        font-size: 0.95rem;
-    }
-
-    /* ===== METHOD Mobile ===== */
-    .method-section {
-        padding: 3rem 1.5rem 2rem 1.5rem;
-        overflow-x: hidden;
-    }
-
-    .method-title {
-        font-size: 12vw;
-        line-height: 0.9;
-        letter-spacing: -0.03em;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-        overflow: hidden;
-        max-width: 100%;
-    }
-
-    .method-title .solid,
-    .method-title .outline {
-        font-size: 12vw;
-    }
-
-    .method-title .outline {
-        -webkit-text-stroke: 1px #111;
-        text-stroke: 1px #111;
-    }
-
-    .method-steps {
-        justify-content: flex-start;
-    }
-
-    .method-panel {
-        display: none;
-    }
-
-    .method-panel.active {
-        display: block;
-    }
-
-    .method-subheader {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-    }
-
-    .subheader-left {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .subheader-left h3 {
-        font-size: 1rem;
-        line-height: 1.3;
-        word-wrap: break-word;
-    }
-
-    .subheader-right {
-        flex-wrap: wrap;
-        font-size: 0.55rem;
-        gap: 0.5rem;
-    }
-
-    .method-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .method-portrait {
-        order: -1;
-    }
-
-    .method-portrait img {
-        max-height: 40vh;
-    }
-
-    /* ===== PROJECTS Mobile ===== */
-    .projects-section {
-        padding: 3rem 1.5rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .project-card {
-        padding: 1rem;
-    }
-
-    /* ===== SKILLS Mobile ===== */
-    .skills-section {
-        padding: 4rem 1.5rem 2rem 1.5rem;
-    }
-
-    .skills-title {
-        font-size: 22vw;
-        margin-bottom: 1rem;
-    }
-
-    .skills-title .outline {
-        -webkit-text-stroke: 1px #fff;
-        text-stroke: 1px #fff;
-    }
-
-    .skills-description {
-        position: relative;
-        top: auto;
-        right: auto;
-        max-width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-
-    .skills-footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-
-    /* ===== PARCOURS Mobile ===== */
-    .parcours-section {
-        padding: 4rem 1.5rem 2rem 1.5rem;
-    }
-
-    .parcours-title {
-        font-size: 18vw;
-        margin-bottom: 1rem;
-    }
-
-    .parcours-title .outline {
-        -webkit-text-stroke: 1px #111;
-        text-stroke: 1px #111;
-    }
-
-    .parcours-description {
-        position: relative;
-        top: auto;
-        right: auto;
-        max-width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    .parcours-school-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-
-    .year-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .year-status {
-        margin-left: 0;
-    }
-
-    .year-header h3 {
-        font-size: 1.2rem;
-    }
-
-    .year-subjects {
-        grid-template-columns: 1fr;
-    }
-
-    /* ===== EVENTS Mobile ===== */
-    .events-section {
-        padding: 4rem 1.5rem 2rem 1.5rem;
-    }
-
-    .events-title {
-        font-size: 20vw;
-        margin-bottom: 1rem;
-    }
-
-    .events-title .outline {
-        -webkit-text-stroke: 1px #111;
-        text-stroke: 1px #111;
-    }
-
-    .events-description {
-        position: relative;
-        top: auto;
-        right: auto;
-        margin-bottom: 2rem;
-    }
-
-    .events-subtitle {
-        font-size: 14vw;
-    }
-
-    .event-item {
-        gap: 1rem;
-    }
-
-    .event-title {
-        font-size: 1rem;
-    }
-
-    .events-footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-
-    /* ===== COMMIT Mobile ===== */
-    .commit-section {
-        padding: 4rem 1.5rem 2rem 1.5rem;
-    }
-
-    .commit-title {
-        font-size: 20vw;
-        margin-bottom: 1rem;
-    }
-
-    .commit-title .outline {
-        -webkit-text-stroke: 1px #111;
-        text-stroke: 1px #111;
-    }
-
-    .commit-description {
-        position: relative;
-        top: auto;
-        right: auto;
-        max-width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    .commit-stats {
-        flex-direction: column;
-        gap: 2rem;
-        padding-left: 0;
-        margin: 2rem 0;
-    }
-
-    .commit-stat-number {
-        font-size: 2.5rem;
-    }
-
-    .graph-months {
-        font-size: 0.5rem;
-    }
-
-    .graph-row {
-        grid-template-columns: repeat(26, 10px);
-    }
-
-    .gq {
-        width: 10px;
-        height: 10px;
-    }
-
-    .commit-total {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .total-number {
-        font-size: 3rem;
-    }
-
-    .commit-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .commit-btn-group {
-        width: 100%;
-    }
-
-    .commit-btn-outline,
-    .commit-btn-solid {
-        flex: 1;
-        text-align: center;
-        justify-content: center;
-    }
-
-    /* ===== CERTS Mobile ===== */
-    .certs-section {
-        padding: 4rem 1.5rem 2rem 1.5rem;
-    }
-
-    .certs-title {
-        font-size: 20vw;
-        margin-bottom: 1rem;
-    }
-
-    .certs-title .outline {
-        -webkit-text-stroke: 1px #111;
-        text-stroke: 1px #111;
-    }
-
-    .certs-description {
-        position: relative;
-        top: auto;
-        right: auto;
-        max-width: 100%;
-        margin-bottom: 2rem;
-    }
-
-    .certs-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .method-footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-
-    /* ===== CONTACT Mobile ===== */
-    .contact-section {
-        padding: 4rem 1.5rem 2rem 1.5rem;
-    }
-
-    .contact-title {
-        font-size: 20vw;
-        margin-bottom: 1rem;
-    }
-
-    .contact-title .outline {
-        -webkit-text-stroke: 1px #fff;
-        text-stroke: 1px #fff;
-    }
-
-    .contact-caption {
-        font-size: 0.9rem;
-        margin-bottom: 2rem;
-    }
-
-    .contact-links {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .contact-link {
-        padding: 1.25rem;
-    }
-
-    .contact-value {
-        font-size: 0.9rem;
-    }
-
-    .contact-footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-
-    /* ===== MODAL Mobile ===== */
-    .cert-modal-content {
-        width: 95%;
-        max-height: 95vh;
-    }
-
-    .cert-modal-image-wrapper {
-        padding: 1rem;
-    }
-
-    .cert-modal-image-wrapper img {
-        max-height: 45vh;
-    }
-
-    .cert-modal-body {
-        padding: 1.5rem;
-    }
-
-    .cert-modal-title {
-        font-size: 1.3rem;
-    }
-
-    .cert-modal-close {
-        width: 36px;
-        height: 36px;
-        font-size: 1.3rem;
-        top: 0.5rem;
-        right: 0.5rem;
-    }
+    .about-section { padding: 4rem 1.5rem; }
+    .about-title { font-size: 25vw; }
+    .about-content { grid-template-columns: 1fr; gap: 2rem; }
+    .about-graphic { order: 2; }
+    .about-graphic img { max-width: 200px; }
+    .about-text { order: 1; }
+    .about-text p { font-size: 0.95rem; }
+
+    .method-section { padding: 3rem 1.5rem 2rem 1.5rem; overflow-x: hidden; }
+    .method-title { font-size: 12vw; line-height: 0.9; letter-spacing: -0.03em; flex-wrap: nowrap; white-space: nowrap; overflow: hidden; max-width: 100%; }
+    .method-title .solid, .method-title .outline { font-size: 12vw; }
+    .method-title .outline { -webkit-text-stroke: 1px #111; text-stroke: 1px #111; }
+    .method-steps { justify-content: flex-start; }
+    .method-panel { display: none; }
+    .method-panel.active { display: block; }
+    .method-subheader { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .subheader-left { flex-wrap: wrap; gap: 0.5rem; }
+    .subheader-left h3 { font-size: 1rem; line-height: 1.3; word-wrap: break-word; }
+    .subheader-right { flex-wrap: wrap; font-size: 0.55rem; gap: 0.5rem; }
+    .method-content { grid-template-columns: 1fr; gap: 1.5rem; }
+    .method-portrait { order: -1; }
+    .method-portrait img { max-height: 40vh; }
+
+    .projects-section { padding: 3rem 1.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card { padding: 1rem; }
+
+    .skills-section { padding: 4rem 1.5rem 2rem 1.5rem; }
+    .skills-title { font-size: 22vw; margin-bottom: 1rem; }
+    .skills-title .outline { -webkit-text-stroke: 1px #fff; text-stroke: 1px #fff; }
+    .skills-description { position: relative; top: auto; right: auto; max-width: 100%; margin-bottom: 2rem; }
+    .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .skills-footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+
+    .parcours-section { padding: 4rem 1.5rem 2rem 1.5rem; }
+    .parcours-title { font-size: 18vw; margin-bottom: 1rem; }
+    .parcours-title .outline { -webkit-text-stroke: 1px #111; text-stroke: 1px #111; }
+    .parcours-description { position: relative; top: auto; right: auto; max-width: 100%; margin-bottom: 2rem; }
+    .parcours-school-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .year-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .year-status { margin-left: 0; }
+    .year-header h3 { font-size: 1.2rem; }
+    .year-subjects { grid-template-columns: 1fr; }
+
+    .events-section { padding: 4rem 1.5rem 2rem 1.5rem; }
+    .events-title { font-size: 20vw; margin-bottom: 1rem; }
+    .events-title .outline { -webkit-text-stroke: 1px #111; text-stroke: 1px #111; }
+    .events-description { position: relative; top: auto; right: auto; margin-bottom: 2rem; }
+    .events-subtitle { font-size: 14vw; }
+    .event-item { gap: 1rem; }
+    .event-title { font-size: 1rem; }
+    .events-footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+
+    .commit-section { padding: 4rem 1.5rem 2rem 1.5rem; }
+    .commit-title { font-size: 20vw; margin-bottom: 1rem; }
+    .commit-title .outline { -webkit-text-stroke: 1px #111; text-stroke: 1px #111; }
+    .commit-description { position: relative; top: auto; right: auto; max-width: 100%; margin-bottom: 2rem; }
+    .commit-stats { flex-direction: column; gap: 2rem; padding-left: 0; margin: 2rem 0; }
+    .commit-stat-number { font-size: 2.5rem; }
+    .graph-months { font-size: 0.5rem; }
+    .graph-row { grid-template-columns: repeat(26, 10px); }
+    .gq { width: 10px; height: 10px; }
+    .commit-total { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .total-number { font-size: 3rem; }
+    .commit-buttons { flex-direction: column; align-items: flex-start; }
+    .commit-btn-group { width: 100%; }
+    .commit-btn-outline, .commit-btn-solid { flex: 1; text-align: center; justify-content: center; }
+
+    .certs-section { padding: 4rem 1.5rem 2rem 1.5rem; }
+    .certs-title { font-size: 20vw; margin-bottom: 1rem; }
+    .certs-title .outline { -webkit-text-stroke: 1px #111; text-stroke: 1px #111; }
+    .certs-description { position: relative; top: auto; right: auto; max-width: 100%; margin-bottom: 2rem; }
+    .certs-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .method-footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+
+    .contact-section { padding: 4rem 1.5rem 2rem 1.5rem; }
+    .contact-title { font-size: 20vw; margin-bottom: 1rem; }
+    .contact-title .outline { -webkit-text-stroke: 1px #fff; text-stroke: 1px #fff; }
+    .contact-caption { font-size: 0.9rem; margin-bottom: 2rem; }
+    .contact-links { grid-template-columns: 1fr; gap: 1rem; }
+    .contact-link { padding: 1.25rem; }
+    .contact-value { font-size: 0.9rem; }
+    .contact-footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+
+    .cert-modal-content { width: 95%; max-height: 95vh; }
+    .cert-modal-image-wrapper { padding: 1rem; }
+    .cert-modal-image-wrapper img { max-height: 45vh; }
+    .cert-modal-body { padding: 1.5rem; }
+    .cert-modal-title { font-size: 1.3rem; }
+    .cert-modal-close { width: 36px; height: 36px; font-size: 1.3rem; top: 0.5rem; right: 0.5rem; }
 }

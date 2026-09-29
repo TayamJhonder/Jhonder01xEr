@@ -56,6 +56,10 @@
         </nav>
     </div>
 
+    <!-- ================= FULLSCREEN IRON FILINGS CANVAS ================= -->
+    <!-- Naka-FIXED sa buong screen - sakop lahat ng monitor -->
+    <canvas class="iron-filings-canvas" id="ironFilingsCanvas"></canvas>
+
     <!-- ================= HERO SECTION ================= -->
     <main class="hero-section" id="top">
         <div class="giant-text">JHONDER</div>
@@ -71,10 +75,10 @@
             </div>
         </div>
 
-        <!-- Profile Image (Responsive: jhonder2.png sa mobile, jhonder.png sa desktop) -->
-        <div class="profile-image-container">
-            <img src="jhonder.png" alt="Profile Picture" class="profile-img desktop-img">
-            <img src="jhonder2.png" alt="Profile Picture" class="profile-img mobile-img">
+        <!-- Profile Image -->
+        <div class="profile-image-container" id="profileContainer">
+            <img src="jhonder.png" alt="Profile Picture" class="profile-img desktop-img" id="profileImgDesktop">
+            <img src="jhonder2.png" alt="Profile Picture" class="profile-img mobile-img" id="profileImgMobile">
         </div>
 
         <div class="info-right">
@@ -143,7 +147,6 @@
             <button class="step-btn" data-step="3">● 03</button>
         </div>
 
-        <!-- ===== STEP 1 ===== -->
         <div class="method-panel active" data-panel="1">
             <div class="method-subheader">
                 <div class="subheader-left">
@@ -197,7 +200,6 @@
             </div>
         </div>
 
-        <!-- ===== STEP 2 ===== -->
         <div class="method-panel" data-panel="2">
             <div class="method-subheader">
                 <div class="subheader-left">
@@ -251,7 +253,6 @@
             </div>
         </div>
 
-        <!-- ===== STEP 3 ===== -->
         <div class="method-panel" data-panel="3">
             <div class="method-subheader">
                 <div class="subheader-left">
