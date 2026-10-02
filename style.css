@@ -158,7 +158,7 @@ a, button, .step-btn, .cert-card, .project-card {
     display: block;
 }
 
-/* ================= LOGO IMAGE (IDINAGDAG LANG) ================= */
+/* ================= LOGO IMAGE ================= */
 .logo-img {
     display: block;
     width: 45px;
@@ -371,6 +371,7 @@ a, button, .step-btn, .cert-card, .project-card {
     overflow: hidden;
 }
 
+/* ================= GIANT TEXT GLITCH EFFECT (SIMPLE / ORIGINAL DESIGN) ================= */
 .giant-text {
     position: absolute;
     top: 20%;
@@ -384,6 +385,53 @@ a, button, .step-btn, .cert-card, .project-card {
     z-index: 1;
     pointer-events: none;
     white-space: nowrap;
+    animation: jhonder-glitch 6s linear infinite;
+}
+
+/* ===== KEYFRAME — squash + skew + brightness flash glitch ===== */
+@keyframes jhonder-glitch {
+    0% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    20% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    40% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    49.5% {
+        transform: translateX(-50%) translateY(-1vh) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    /* GLITCH BURST #1 — squash + skewX + bright flash */
+    50% {
+        transform: translateX(-50%) translateY(-1vh) scaleY(0.1) skewX(253deg);
+        filter: brightness(190%);
+    }
+    /* GLITCH BURST #2 — skew warp */
+    51% {
+        transform: translateX(-50%) translateY(-1vh) scaleY(0.5) skewY(37deg);
+        filter: brightness(190%);
+    }
+    52% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    70% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    90% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0) scaleY(1) skewY(0deg);
+        filter: brightness(100%);
+    }
 }
 
 .stats-left {
@@ -663,14 +711,13 @@ a.cta-btn {
     align-items: center;
 }
 
-/* ===== FIX: FULL COLOR NA ANG SIMP.PNG ===== */
+/* ===== FULL COLOR ANG SIMP.PNG ===== */
 .about-graphic img {
     width: 100%;
     max-width: 400px;
     height: auto;
     opacity: 1;
     display: block;
-    /* Tinanggal ang filter para lumabas ang original color */
 }
 
 .about-text {
@@ -2553,7 +2600,6 @@ a.cta-btn {
     .nav-right { gap: 1rem; }
     .burger-btn { display: flex; }
 
-    /* Logo size sa mobile (IDINAGDAG) */
     .logo-img {
         width: 38px;
         height: 38px;
@@ -2572,6 +2618,7 @@ a.cta-btn {
         overflow: visible;
     }
 
+    /* ===== GIANT TEXT MOBILE + SIMPLE GLITCH ===== */
     .giant-text {
         position: relative;
         top: auto;
@@ -2583,6 +2630,52 @@ a.cta-btn {
         width: 100%;
         text-align: center;
         line-height: 1;
+        color: #000;
+        animation: jhonder-glitch-mobile 6s linear infinite;
+    }
+
+    /* Mobile version ng glitch (walang translateX(-50%)) */
+    @keyframes jhonder-glitch-mobile {
+        0% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        20% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        40% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        49.5% {
+            transform: translateY(-1vh) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        50% {
+            transform: translateY(-1vh) scaleY(0.2) skewX(200deg);
+            filter: brightness(180%);
+        }
+        51% {
+            transform: translateY(-1vh) scaleY(0.5) skewY(25deg);
+            filter: brightness(180%);
+        }
+        52% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        70% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        90% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
+        100% {
+            transform: translateY(0) scaleY(1) skewY(0deg);
+            filter: brightness(100%);
+        }
     }
 
     .profile-image-container {
@@ -2663,7 +2756,6 @@ a.cta-btn {
     }
 
     .about-section { padding: 4rem 1.5rem; }
-    /* ===== FIX: /ABOUT TITLE FIT SA SCREEN ===== */
     .about-title { 
         font-size: 18vw; 
         word-break: break-word;
@@ -2673,7 +2765,6 @@ a.cta-btn {
     .about-graphic { order: 2; }
     .about-graphic img { 
         max-width: 200px; 
-        /* Walang filter para full color */
     }
     .about-text { order: 1; }
     .about-text p { font-size: 0.95rem; }
@@ -2698,7 +2789,6 @@ a.cta-btn {
     .project-card { padding: 1rem; }
 
     .skills-section { padding: 4rem 1.5rem 2rem 1.5rem; }
-    /* ===== FIX: ARSENAL TITLE FIT SA SCREEN ===== */
     .skills-title { 
         font-size: 18vw; 
         margin-bottom: 1rem;
@@ -2770,7 +2860,6 @@ a.cta-btn {
     .cert-modal-title { font-size: 1.3rem; }
     .cert-modal-close { width: 36px; height: 36px; font-size: 1.3rem; top: 0.5rem; right: 0.5rem; }
 
-    /* Mobile marquee opacity */
     .bg-marquee-container { opacity: 0.2; }
     .bg-marquee-item {
         width: 14vmin;
@@ -2778,7 +2867,6 @@ a.cta-btn {
         padding: 1.4vmin;
     }
 
-    /* ================= MOBILE MENU FIT SA SCREEN (IDINAGDAG) ================= */
     .mobile-menu {
         width: 85%;
         max-width: 340px;
@@ -2812,7 +2900,6 @@ a.cta-btn {
         font-size: 1.2rem;
     }
 
-    /* ================= SCROLL ALIGNMENT FIX (IDINAGDAG) ================= */
     .hero-section {
         max-width: 100vw;
         overflow-x: hidden;
@@ -2846,7 +2933,7 @@ a.cta-btn {
     }
 }
 
-/* ================= VERY SMALL PHONES (IDINAGDAG) ================= */
+/* ================= VERY SMALL PHONES ================= */
 @media (max-width: 400px) {
     .bg-marquee-item {
         width: 16vmin;
@@ -2857,7 +2944,6 @@ a.cta-btn {
     .mobile-nav-links a { font-size: 1.15rem; }
     .mobile-menu { width: 90%; }
 
-    /* ===== EXTRA FIX PARA SA MALIIT NA SCREEN ===== */
     .about-title { font-size: 16vw; }
     .skills-title { font-size: 16vw; }
 }
@@ -2878,7 +2964,6 @@ a.cta-btn {
         font-size: 1rem;
     }
 
-    /* ===== EXTRA FIX PARA SA PINAKAMALIIT NA SCREEN ===== */
     .about-title { font-size: 15vw; }
     .skills-title { font-size: 15vw; }
 }
