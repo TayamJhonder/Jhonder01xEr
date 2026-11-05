@@ -137,21 +137,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        const ctx = canvas.getContext('2d');
-        const DPR = Math.min(1.5, window.devicePixelRatio || 1);
+        const ctx = canvas.getContext('2d', { desynchronized: true });
+        const DPR = Math.min(1.25, window.devicePixelRatio || 1);
 
-        const START_DELAY = 10;
-        const ASSEMBLE_DURATION = 3800;
-        const SAMPLE_STEP = 4;
+        const START_DELAY = 350;
+        const ASSEMBLE_DURATION = 5200;
+        const SCATTER_DURATION = 0.26;
+        const PROFILE_SHAPE_PROGRESS = 0.76;
+        const IMAGE_REVEAL_PROGRESS = 0.9;
+        const MAX_PARTICLES = 2600;
+        const WEB_NODE_RADIUS = 2;
 
         let particles = [];
+        let loadingNodes = [];
+        let loadingLinks = [];
+        let loadingFrame = 0;
         let imgRect = { x: 0, y: 0, w: 0, h: 0 };
 
         let state = {
             running: false,
+            loadingAnimation: false,
+            starting: false,
             phaseStart: 0,
             progress: 0,
             finished: false,
+            imageRevealStarted: false,
             activeImg: null
         };
 
@@ -169,6 +179,176 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.scale(DPR, DPR);
         }
 
+        function clearCanvas() {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        }
+
+        function createLoadingWeb() {
+            const width = canvas.clientWidth || window.innerWidth;
+            const height = canvas.clientHeight || window.innerHeight;
+            const nodeCount = Math.min(900, Math.max(540, Math.round(width * height / 1200)));
+
+            loadingNodes = [];
+            loadingLinks = [];
+
+            for (let i = 0; i < nodeCount; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 0.45 + Math.random() * 0.75;
+                loadingNodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    targetX: null,
+                    targetY: null,
+                    sourceX: null,
+                    sourceY: null,
+                    phase: Math.random() * Math.PI * 2
+                });
+            }
+
+            const linkedPairs = new Set();
+            for (let i = 0; i < loadingNodes.length; i++) {
+                const node = loadingNodes[i];
+                const nearest = [];
+
+                for (let j = 0; j < i; j++) {
+                    const other = loadingNodes[j];
+                    const distance = Math.hypot(other.x - node.x, other.y - node.y);
+                    if (distance < 150) nearest.push({ index: j, distance: distance });
+                }
+
+                nearest.sort(function(a, b) {
+                    return a.distance - b.distance;
+                });
+
+                for (let j = 0; j < Math.min(2, nearest.length); j++) {
+                    const otherIndex = nearest[j].index;
+                    const key = otherIndex + ':' + i;
+                    if (linkedPairs.has(key)) continue;
+                    linkedPairs.add(key);
+                    loadingLinks.push({
+                        a: otherIndex,
+                        b: i,
+                        opacity: Math.max(0.12, 0.48 * (1 - nearest[j].distance / 150))
+                    });
+                }
+            }
+        }
+
+        function animateLoadingWeb() {
+            if (!state.loadingAnimation) return;
+            if (!document.hidden) {
+                clearCanvas();
+                drawLoadingWeb();
+            }
+
+            loadingFrame = requestAnimationFrame(animateLoadingWeb);
+        }
+
+        function drawLoadingWeb() {
+            const width = canvas.clientWidth || window.innerWidth;
+            const height = canvas.clientHeight || window.innerHeight;
+
+            for (let i = 0; i < loadingNodes.length; i++) {
+                const node = loadingNodes[i];
+                if (state.running && node.targetX !== null) {
+                    if (state.progress < SCATTER_DURATION) {
+                        const scatter = state.progress / SCATTER_DURATION;
+                        node.x = node.sourceX + node.vx * scatter * 78;
+                        node.y = node.sourceY + node.vy * scatter * 78;
+                    } else {
+                        const gather = Math.min(1, (state.progress - SCATTER_DURATION) / (PROFILE_SHAPE_PROGRESS - SCATTER_DURATION));
+                        const eased = 1 - Math.pow(1 - gather, 3);
+                        const scatterX = node.sourceX + node.vx * 78;
+                        const scatterY = node.sourceY + node.vy * 78;
+                        const drift = Math.sin(gather * Math.PI * 3 + node.phase) * 18 * (1 - eased);
+                        node.x = scatterX + (node.targetX - scatterX) * eased + drift;
+                        node.y = scatterY + (node.targetY - scatterY) * eased - drift * 0.55;
+                    }
+                } else {
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    if (node.x < 0 || node.x > width) {
+                        node.vx *= -1;
+                        node.x = Math.max(0, Math.min(width, node.x));
+                    }
+                    if (node.y < 0 || node.y > height) {
+                        node.vy *= -1;
+                        node.y = Math.max(0, Math.min(height, node.y));
+                    }
+                }
+            }
+
+            const lineBuckets = [[], [], [], []];
+            for (let i = 0; i < loadingLinks.length; i++) {
+                const link = loadingLinks[i];
+                const bucket = Math.min(3, Math.floor(link.opacity * 4));
+                lineBuckets[bucket].push(link);
+            }
+
+            for (let bucket = 0; bucket < lineBuckets.length; bucket++) {
+                if (!lineBuckets[bucket].length) continue;
+                ctx.beginPath();
+                for (let i = 0; i < lineBuckets[bucket].length; i++) {
+                    const link = lineBuckets[bucket][i];
+                    const a = loadingNodes[link.a];
+                    const b = loadingNodes[link.b];
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                }
+                ctx.strokeStyle = 'rgba(38, 42, 48, ' + ((bucket + 1) * 0.12) + ')';
+                ctx.lineWidth = 1.25;
+                ctx.stroke();
+            }
+
+            ctx.beginPath();
+            for (let i = 0; i < loadingNodes.length; i++) {
+                const node = loadingNodes[i];
+                ctx.moveTo(node.x + WEB_NODE_RADIUS, node.y);
+                ctx.arc(node.x, node.y, WEB_NODE_RADIUS, 0, Math.PI * 2);
+            }
+            ctx.fillStyle = '#111';
+            ctx.fill();
+        }
+
+        function prepareLoadingTargets() {
+            if (!particles.length) return;
+
+            for (let i = 0; i < loadingNodes.length; i++) {
+                const node = loadingNodes[i];
+                const targetIndex = Math.min(particles.length - 1, Math.floor((i + 0.5) * particles.length / loadingNodes.length));
+                const target = particles[targetIndex];
+                node.sourceX = node.x;
+                node.sourceY = node.y;
+                node.targetX = target.tx;
+                node.targetY = target.ty;
+            }
+        }
+
+        function stopLoadingWeb(clear = true) {
+            state.loadingAnimation = false;
+            cancelAnimationFrame(loadingFrame);
+            if (clear) {
+                loadingNodes.length = 0;
+                loadingLinks.length = 0;
+                clearCanvas();
+            }
+        }
+
+        function startLoadingWeb() {
+            canvas.style.visibility = 'visible';
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            resizeCanvas();
+            createLoadingWeb();
+            state.loadingAnimation = true;
+            loadingFrame = requestAnimationFrame(animateLoadingWeb);
+        }
+
         function computeImageRect() {
             const activeImg = getActiveImage();
             if (!activeImg) return;
@@ -183,116 +363,122 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function start() {
+            if (state.starting || state.finished) return;
             resizeCanvas();
             computeImageRect();
 
             const activeImg = getActiveImage();
-            if (!activeImg || activeImg.naturalWidth === 0) {
-                setTimeout(start, 100);
+            if (!activeImg || !activeImg.complete || activeImg.naturalWidth === 0) return;
+
+            state.starting = true;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                stopLoadingWeb();
+                activeImg.style.opacity = '1';
+                canvas.style.visibility = 'hidden';
+                state.finished = true;
                 return;
             }
 
             activeImg.style.transition = 'opacity 0.2s ease-out';
             activeImg.style.opacity = '0';
 
-            initParticles(activeImg);
-
-            setTimeout(function() {
-                state.running = true;
-                state.phaseStart = performance.now();
-                animate();
-            }, START_DELAY);
+            initParticles(activeImg, function() {
+                if (state.finished) return;
+                setTimeout(function() {
+                    prepareLoadingTargets();
+                    stopLoadingWeb(false);
+                    state.running = true;
+                    state.phaseStart = performance.now();
+                    window.dispatchEvent(new Event('profile-assembly-start'));
+                    animate();
+                }, START_DELAY);
+            });
         }
 
-        function initParticles(img) {
+        function initParticles(img, onComplete) {
             const iw = img.naturalWidth;
             const ih = img.naturalHeight;
+            const sampleScale = Math.min(1, Math.sqrt(MAX_PARTICLES / (iw * ih)));
+            const sampleWidth = Math.max(1, Math.floor(iw * sampleScale));
+            const sampleHeight = Math.max(1, Math.floor(ih * sampleScale));
 
             const off = document.createElement('canvas');
-            off.width = iw;
-            off.height = ih;
+            off.width = sampleWidth;
+            off.height = sampleHeight;
             const offCtx = off.getContext('2d', { willReadFrequently: true });
-            offCtx.drawImage(img, 0, 0, iw, ih);
+            offCtx.drawImage(img, 0, 0, sampleWidth, sampleHeight);
 
             let data;
             try {
-                data = offCtx.getImageData(0, 0, iw, ih).data;
+                data = offCtx.getImageData(0, 0, sampleWidth, sampleHeight).data;
             } catch (e) {
-                data = null;
+                console.warn('Could not read profile image pixels for particle animation.', e);
+                stopLoadingWeb();
+                img.style.transition = 'none';
+                img.style.opacity = '1';
+                canvas.style.visibility = 'hidden';
+                state.finished = true;
+                return;
             }
 
             particles = [];
-
-            const scaleX = imgRect.w / iw;
-            const scaleY = imgRect.h / ih;
-            const particleSize = Math.max(1.5, SAMPLE_STEP * scaleX * 1.4);
-
-            const cx = imgRect.x + imgRect.w / 2;
-            const cy = imgRect.y + imgRect.h / 2;
-
+            const scaleX = imgRect.w / sampleWidth;
+            const scaleY = imgRect.h / sampleHeight;
             const screenW = canvas.clientWidth || window.innerWidth;
             const screenH = canvas.clientHeight || window.innerHeight;
-            const screenDiag = Math.sqrt(screenW * screenW + screenH * screenH);
 
-            const minDist = screenDiag * 0.65;
-            const maxDist = screenDiag * 0.95;
+            let sampleY = 0;
+            const rowsPerBatch = Math.max(1, Math.floor(350 / sampleWidth));
 
-            if (!data) return;
+            function processBatch() {
+                const batchEndY = Math.min(sampleHeight, sampleY + rowsPerBatch);
+                for (; sampleY < batchEndY; sampleY++) {
+                    for (let x = 0; x < sampleWidth; x++) {
+                        const idx = (sampleY * sampleWidth + x) * 4;
+                        const a = data[idx + 3];
 
-            for (let y = 0; y < ih; y += SAMPLE_STEP) {
-                for (let x = 0; x < iw; x += SAMPLE_STEP) {
-                    const idx = (y * iw + x) * 4;
-                    const r = data[idx];
-                    const g = data[idx + 1];
-                    const b = data[idx + 2];
-                    const a = data[idx + 3];
+                        if (a < 20) continue;
 
-                    if (a < 20) continue;
+                        const tx = imgRect.x + (x + 0.5) * scaleX;
+                        const ty = imgRect.y + (sampleY + 0.5) * scaleY;
 
-                    const tx = imgRect.x + x * scaleX + (SAMPLE_STEP * scaleX) / 2;
-                    const ty = imgRect.y + y * scaleY + (SAMPLE_STEP * scaleY) / 2;
+                        const sx = Math.random() * screenW;
+                        const sy = Math.random() * screenH;
+                        const bendX = (Math.random() - 0.5) * 200;
+                        const bendY = (Math.random() - 0.5) * 200;
 
-                    let dirX = tx - cx;
-                    let dirY = ty - cy;
-                    const dirLen = Math.sqrt(dirX * dirX + dirY * dirY) + 0.001;
-                    dirX /= dirLen;
-                    dirY /= dirLen;
-
-                    const angleVar = (Math.random() - 0.5) * 1.0;
-                    const cosA = Math.cos(angleVar);
-                    const sinA = Math.sin(angleVar);
-                    const fdx = dirX * cosA - dirY * sinA;
-                    const fdy = dirX * sinA + dirY * cosA;
-
-                    const distFromCenter = minDist + Math.random() * (maxDist - minDist);
-
-                    const sx = cx + fdx * distFromCenter;
-                    const sy = cy + fdy * distFromCenter;
-
-                    const alpha = a / 255;
-                    const colorString = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
-
-                    particles.push({
-                        sx: sx,
-                        sy: sy,
-                        tx: tx,
-                        ty: ty,
-                        x: sx,
-                        y: sy,
-                        color: colorString,
-                        size: particleSize,
-                        delay: Math.random() * 0.4,
-                        duration: 0.55 + Math.random() * 0.4,
-                        startAngle: (Math.random() - 0.5) * Math.PI * 2,
-                        swirlAmp: 15 + Math.random() * 40,
-                        swirlPhase: Math.random() * Math.PI * 2,
-                        curveX: (Math.random() - 0.5) * 120,
-                        curveY: (Math.random() - 0.5) * 120
-                    });
+                        const particle = {
+                            sx: sx,
+                            sy: sy,
+                            tx: tx,
+                            ty: ty,
+                            x: sx,
+                            y: sy,
+                            delay: Math.random() * 0.08,
+                            duration: 0.82 + Math.random() * 0.06,
+                            swirlAmp: 20 + Math.random() * 36,
+                            swirlPhase: Math.random() * Math.PI * 2,
+                            curveX: bendX,
+                            curveY: bendY,
+                            driftX: 8 + Math.random() * 16,
+                            driftY: 8 + Math.random() * 16,
+                            localT: 0,
+                            phase: Math.random() * Math.PI * 2
+                        };
+                        particles.push(particle);
+                    }
                 }
+
+                if (sampleY < sampleHeight) {
+                    requestAnimationFrame(processBatch);
+                    return;
+                }
+
+                state.activeImg = img;
+                onComplete();
             }
 
-            state.activeImg = img;
+            processBatch();
         }
 
         function animate() {
@@ -302,41 +488,49 @@ document.addEventListener('DOMContentLoaded', function() {
             const elapsed = now - state.phaseStart;
             state.progress = Math.min(1, elapsed / ASSEMBLE_DURATION);
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            updateParticles();
-            drawParticles();
+            if (state.progress >= IMAGE_REVEAL_PROGRESS && !state.imageRevealStarted && state.activeImg) {
+                state.imageRevealStarted = true;
+                state.activeImg.style.transition = 'opacity 0.65s ease-out';
+                state.activeImg.style.opacity = '1';
+            }
 
             if (state.progress >= 1 && !state.finished) {
                 state.finished = true;
                 state.running = false;
 
                 if (state.activeImg) {
+                    state.activeImg.style.transition = 'none';
                     state.activeImg.style.opacity = '1';
                 }
 
-                setTimeout(function() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }, 250);
+                clearCanvas();
+                loadingNodes.length = 0;
+                loadingLinks.length = 0;
+                particles.length = 0;
+                canvas.style.visibility = 'hidden';
 
                 return;
             }
 
+            clearCanvas();
+            drawLoadingWeb();
+            updateParticles();
             requestAnimationFrame(animate);
         }
 
         function updateParticles() {
             const t = state.progress;
             const len = particles.length;
+            const gatherProgress = Math.max(0, Math.min(1, (t - SCATTER_DURATION) / (1 - SCATTER_DURATION)));
 
             for (let i = 0; i < len; i++) {
                 const p = particles[i];
 
-                let localT = (t - p.delay) / p.duration;
-                if (localT < 0) localT = 0;
-                else if (localT > 1) localT = 1;
+                let localT = (gatherProgress - p.delay) / p.duration;
+                localT = Math.max(0, Math.min(1, localT));
+                p.localT = localT;
 
-                const ease = 1 - Math.pow(1 - localT, 5);
+                const ease = 1 - Math.pow(1 - localT, 4);
 
                 let px = p.sx * (1 - ease) + p.tx * ease;
                 let py = p.sy * (1 - ease) + p.ty * ease;
@@ -345,59 +539,86 @@ document.addEventListener('DOMContentLoaded', function() {
                 px += p.curveX * curveFactor * (1 - ease);
                 py += p.curveY * curveFactor * (1 - ease);
 
-                const swirlFade = (1 - localT) * (1 - localT);
-                px += Math.sin(localT * Math.PI * 2 + p.swirlPhase) * p.swirlAmp * swirlFade;
-                py += Math.cos(localT * Math.PI * 2 + p.swirlPhase) * p.swirlAmp * 0.5 * swirlFade;
+                const swirlFade = Math.pow(1 - localT, 1.4);
+                const swirlAngle = localT * Math.PI * 2.4 + p.swirlPhase;
+                px += Math.sin(swirlAngle) * p.swirlAmp * swirlFade;
+                py += Math.cos(swirlAngle) * p.swirlAmp * 0.65 * swirlFade;
 
-                p.x = px;
-                p.y = py;
-                p.angle = p.startAngle * (1 - ease);
-            }
-        }
-
-        function drawParticles() {
-            const len = particles.length;
-            const W = canvas.clientWidth || window.innerWidth;
-            const H = canvas.clientHeight || window.innerHeight;
-
-            for (let i = 0; i < len; i++) {
-                const p = particles[i];
-
-                if (p.x < -100 || p.x > W + 100 || p.y < -100 || p.y > H + 100) continue;
-
-                if (Math.abs(p.angle) < 0.05) {
-                    ctx.fillStyle = p.color;
-                    const half = p.size / 2;
-                    ctx.fillRect(p.x - half, p.y - half, p.size, p.size);
+                if (t < SCATTER_DURATION) {
+                    const drift = t * 9 + p.phase;
+                    p.x = p.sx + Math.sin(drift) * p.driftX;
+                    p.y = p.sy + Math.cos(drift * 0.83) * p.driftY;
                 } else {
-                    ctx.save();
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate(p.angle);
-                    ctx.strokeStyle = p.color;
-                    ctx.lineWidth = p.size;
-                    ctx.lineCap = 'round';
-                    const lineLen = p.size * 2.8;
-                    ctx.beginPath();
-                    ctx.moveTo(-lineLen / 2, 0);
-                    ctx.lineTo(lineLen / 2, 0);
-                    ctx.stroke();
-                    ctx.restore();
+                    p.x = px;
+                    p.y = py;
                 }
             }
         }
 
-        function waitAndStart() {
-            const activeImg = getActiveImage();
-            if (!activeImg) return;
+        function drawEnergyPulse() {
+            const cx = imgRect.x + imgRect.w / 2;
+            const cy = imgRect.y + imgRect.h / 2;
+            const baseRadius = Math.max(imgRect.w, imgRect.h) * 0.28;
+            const maxRadius = Math.hypot(canvas.clientWidth, canvas.clientHeight) * 0.58;
+            const pulses = [0.02, 0.2];
 
-            if (activeImg.complete && activeImg.naturalWidth > 0) {
-                start();
-            } else {
-                activeImg.addEventListener('load', start, { once: true });
-                activeImg.addEventListener('error', function() {
-                    console.warn('⚠️ Hindi ma-load ang profile image');
-                }, { once: true });
+            for (let i = 0; i < pulses.length; i++) {
+                const pulseProgress = (state.progress - pulses[i]) / 0.38;
+                if (pulseProgress <= 0 || pulseProgress >= 1) continue;
+
+                const eased = 1 - Math.pow(1 - pulseProgress, 3);
+                const radius = baseRadius + (maxRadius - baseRadius) * eased;
+                const alpha = Math.sin(pulseProgress * Math.PI) * 0.24;
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, ' + alpha + ')';
+                ctx.lineWidth = 2.5 * (1 - pulseProgress) + 0.5;
+                ctx.stroke();
             }
+
+            const chargeProgress = (state.progress - 0.16) / 0.54;
+            if (chargeProgress > 0 && chargeProgress < 1) {
+                const radius = baseRadius * (1.25 + chargeProgress * 0.22);
+                ctx.beginPath();
+                ctx.setLineDash([12, 16]);
+                ctx.lineDashOffset = -state.progress * 180;
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, ' + Math.sin(chargeProgress * Math.PI) * 0.3 + ')';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        function waitAndStart() {
+            let assemblyScheduled = false;
+
+            function scheduleAssembly() {
+                if (document.readyState !== 'complete' || state.starting || state.finished || assemblyScheduled) return;
+
+                const activeImg = getActiveImage();
+                if (!activeImg || !activeImg.complete || activeImg.naturalWidth === 0) return;
+
+                assemblyScheduled = true;
+                window.setTimeout(function() {
+                    assemblyScheduled = false;
+                    start();
+                }, START_DELAY);
+            }
+
+            [imgDesktop, imgMobile].forEach(function(img) {
+                if (!img) return;
+                img.style.opacity = '0';
+                img.addEventListener('load', scheduleAssembly);
+                img.addEventListener('error', function() {
+                    console.warn('⚠️ Hindi ma-load ang profile image');
+                    scheduleAssembly();
+                });
+            });
+
+            window.addEventListener('load', scheduleAssembly, { once: true });
+            scheduleAssembly();
         }
 
         let resizeTimeout;
@@ -406,10 +627,15 @@ document.addEventListener('DOMContentLoaded', function() {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(function() {
                 resizeCanvas();
-                computeImageRect();
+                if (state.loadingAnimation) {
+                    createLoadingWeb();
+                } else {
+                    computeImageRect();
+                }
             }, 250);
         });
 
+        startLoadingWeb();
         waitAndStart();
 
     })();
@@ -435,6 +661,73 @@ document.addEventListener('DOMContentLoaded', function() {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
+    })();
+
+    /* =====================================================
+       6. SLOW, REVERSING AUTO-SCROLL
+       ===================================================== */
+    (function initAutoScroll() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prefersReducedMotion.matches) return;
+
+        const SPEED = 18;
+        const RESUME_DELAY = 6000;
+        let direction = 1;
+        let paused = false;
+        let lastFrame = 0;
+        let started = false;
+        let scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        let resumeTimer;
+
+        function pauseForInteraction() {
+            paused = true;
+            lastFrame = 0;
+            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(function() {
+                scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+                paused = false;
+            }, RESUME_DELAY);
+        }
+
+        function animateScroll(timestamp) {
+            if (!lastFrame) lastFrame = timestamp;
+            const elapsed = Math.min(timestamp - lastFrame, 64);
+            lastFrame = timestamp;
+
+            if (!paused && !document.hidden) {
+                const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+                scrollPosition += direction * SPEED * elapsed / 1000;
+
+                if (scrollPosition >= maxScroll) {
+                    scrollPosition = maxScroll;
+                    direction = -1;
+                    window.scrollTo({ top: maxScroll, behavior: 'instant' });
+                } else if (scrollPosition <= 0) {
+                    scrollPosition = 0;
+                    direction = 1;
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                } else {
+                    window.scrollTo({ top: scrollPosition, behavior: 'instant' });
+                }
+            }
+
+            requestAnimationFrame(animateScroll);
+        }
+
+        function startAutoScroll() {
+            if (started) return;
+            started = true;
+            lastFrame = 0;
+            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            requestAnimationFrame(animateScroll);
+        }
+
+        window.addEventListener('wheel', pauseForInteraction, { passive: true });
+        window.addEventListener('touchstart', pauseForInteraction, { passive: true });
+        window.addEventListener('pointerdown', pauseForInteraction, { passive: true });
+        window.addEventListener('keydown', pauseForInteraction);
+        window.addEventListener('profile-assembly-start', startAutoScroll, { once: true });
     })();
 
 });

@@ -559,6 +559,7 @@ a, button, .step-btn, .cert-card, .project-card {
     position: relative;
     z-index: 3;
     pointer-events: auto;
+    opacity: 0;
     transition: opacity 0.25s ease-out;
 }
 
@@ -3282,71 +3283,71 @@ a.cta-btn {
    FINAL TITLE STYLES: BLACK/WHITE + SHINE + OUTLINE + MOTION
    ===================================================== */
 
+.about-title,
 .method-title .solid,
+.skills-title .solid,
 .parcours-title .solid,
 .events-title .solid,
+.commit-title .solid,
 .certs-title .solid,
-.commit-title .solid {
-    color: #111 !important;
-    -webkit-text-fill-color: #111 !important;
-    background: none !important;
+.contact-title .solid {
+    background-image: linear-gradient(
+        110deg,
+        #111111 0%,
+        #777777 22%,
+        #f2f2f2 42%,
+        #ffffff 50%,
+        #f2f2f2 58%,
+        #777777 78%,
+        #111111 100%
+    ) !important;
+    background-size: 300% 100% !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: title-neutral-motion 5s linear infinite;
 }
 
 .method-title .outline,
+.skills-title .outline,
 .parcours-title .outline,
 .events-title .outline,
+.commit-title .outline,
 .certs-title .outline,
-.commit-title .outline {
-    color: transparent !important;
-    -webkit-text-fill-color: transparent !important;
-    -webkit-text-stroke: 2px #111 !important;
-    background: none !important;
-}
-
-.skills-title .solid,
-.contact-title .solid {
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
-    background: none !important;
-}
-
-.skills-title .outline,
 .contact-title .outline {
-    color: transparent !important;
-    -webkit-text-fill-color: transparent !important;
-    -webkit-text-stroke: 2px #fff !important;
-    background: none !important;
+    -webkit-text-stroke-color: #111111;
+    animation: title-neutral-outline 3s ease-in-out infinite;
 }
 
-.about-title, .method-title, .skills-title, .parcours-title, .events-title, .commit-title, .certs-title, .contact-title {
-    background-size: 300% 100% !important;
-    animation: 
-        shine-auto-bw 4s linear infinite,
-        float-motion 6s ease-in-out infinite,
-        breathe-motion 8s ease-in-out infinite,
-        sway-motion 10s ease-in-out infinite !important;
-    transform-origin: center;
+@keyframes title-neutral-motion {
+    from { background-position: 100% 50%; }
+    to { background-position: 0% 50%; }
 }
 
-@keyframes shine-auto-bw {
-    0% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes title-neutral-outline {
+    0%, 100% { -webkit-text-stroke-color: #111111; }
+    50% { -webkit-text-stroke-color: #888888; }
 }
 
-@keyframes float-motion {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-10px); }
-}
-
-@keyframes breathe-motion {
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.02); }
-}
-
-@keyframes sway-motion {
-    0%, 100% { transform: rotate(0deg); }
-    25%      { transform: rotate(1deg); }
-    75%      { transform: rotate(-1deg); }
+@media (prefers-reduced-motion: reduce) {
+    .about-title,
+    .method-title .solid,
+    .skills-title .solid,
+    .parcours-title .solid,
+    .events-title .solid,
+    .commit-title .solid,
+    .certs-title .solid,
+    .contact-title .solid,
+    .method-title .outline,
+    .skills-title .outline,
+    .parcours-title .outline,
+    .events-title .outline,
+    .commit-title .outline,
+    .certs-title .outline,
+    .contact-title .outline {
+        animation: none;
+    }
 }
 
 /* =====================================================

@@ -127,12 +127,11 @@ window.addEventListener('load', function() {
             duration: 0.9,
             ease: 'back.out(1.2)'
         }, '-=0.9')
-        // Profile image scales up dramatically
+        // Keep the image geometry stable while the particle effect assembles it.
         .from('.profile-image-container', { 
-            scale: 0.7, 
             opacity: 0, 
             duration: 1.2,
-            ease: 'elastic.out(1, 0.5)'
+            ease: 'power2.out'
         }, '-=0.7')
         // Info right slides in from right
         .from('.info-right > *', { 
@@ -981,27 +980,6 @@ window.addEventListener('load', function() {
                 });
             }
         });
-    });
-
-    /* =====================================================
-       18. GSAP TITLE SHINE EFFECT
-       ===================================================== */
-    var sectionTitles = document.querySelectorAll('.about-title, .method-title, .skills-title, .parcours-title, .events-title, .commit-title, .certs-title, .contact-title');
-    
-    sectionTitles.forEach(function(title) {
-        gsap.fromTo(title, 
-            { backgroundPosition: '100% 50%' },
-            {
-                backgroundPosition: '0% 50%',
-                duration: 1.5,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: title,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none'
-                }
-            }
-        );
     });
 
     /* =====================================================
