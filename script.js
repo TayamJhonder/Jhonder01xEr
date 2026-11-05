@@ -138,11 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const ctx = canvas.getContext('2d');
-        const DPR = Math.min(2, window.devicePixelRatio || 1);
+        const DPR = Math.min(1.5, window.devicePixelRatio || 1);
 
         const START_DELAY = 10;
         const ASSEMBLE_DURATION = 3800;
-        const SAMPLE_STEP = 3;
+        const SAMPLE_STEP = 4;
 
         let particles = [];
         let imgRect = { x: 0, y: 0, w: 0, h: 0 };
@@ -412,6 +412,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         waitAndStart();
 
+    })();
+    
+    /* =====================================================
+       5. PROFESSIONAL SCROLL & UI ENHANCEMENTS
+       ===================================================== */
+    (function initUIEnhancements() {
+        const navbar = document.getElementById('navbar');
+
+        // Scroll listener for Navbar
+        function handleScroll() {
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (navbar) {
+                if (scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
     })();
 
 });

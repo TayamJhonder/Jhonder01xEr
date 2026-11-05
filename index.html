@@ -75,13 +75,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- ================= FONT AWESOME (ICONS) ================= -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
-
     <!-- ================= NAVIGATION BAR ================= -->
     <header class="navbar" id="navbar">
-        <a href="#top" class="logo" id="logoLink">
+        <a href="#" class="logo" id="logoLink">
             <img src="logo.png" alt="Jhonder Tayam Logo" class="logo-img">
         </a>
 
@@ -166,8 +172,9 @@
             <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="cta-btn">INITIATE SYSTEM ↗</a>
         </div>
 
+        <!-- ================= SCROLL INDICATOR ================= -->
         <div class="scroll-indicator">
-            SCROLL TO EXPLORE ↓
+            <span class="scroll-text">SCROLL TO EXPLORE ↓</span>
         </div>
     </main>
 
@@ -189,7 +196,7 @@
             </div>
 
             <div class="about-text">
-                <p>
+                <p id="about-typewriter">
                     I'm <strong>JHONDER TAYAM</strong> — a 3rd year Computer Science Student and Software Developer based in Sorsogon City, Philippines. I'm a proud member of <strong>HALL OF CODES</strong> and Scholar in OWWA program, currently studying at the Computer Communication Development Institute; and I am Former Personal Student Assistant of Administrator in our Institute. during my free time, I enjoy building systems, web applications, and turning my complex ideas into reality.
                 </p>
             </div>
@@ -720,7 +727,7 @@
                 </div>
                 <div class="year-content">
                     <p class="year-desc">
-                        Nagsimula ang journey ko sa Computer Science sa pag-aaral ng mga fundamentals ng programming at computer systems. Dito ko unang na-encounter ang C++ at ang mga basic concepts ng algorithms at data structures. Napaka-importanteng foundation ito para sa lahat ng susunod kong projects.
+                        My Computer Science journey began with mastering core programming fundamentals and computer architecture. Here, I first worked with C++ along with foundational data structures and algorithms. This critical groundwork established the problem-solving mindset behind every project I build today.
                     </p>
                     <div class="year-subjects">
                         <div class="subject-item">
@@ -760,7 +767,7 @@
                 </div>
                 <div class="year-content">
                     <p class="year-desc">
-                        Sa 2nd year, lumalim ang understanding ko sa programming at software development. Dito ako unang nag-explore ng object-oriented programming, database management, at web development. Nag-umpisa na rin akong mag-build ng mas malalaking projects — mga desktop applications at web systems.
+                        In my second year, I deepened my knowledge in software engineering, object-oriented design, database administration, and web architectures. I began building more complex systems, desktop applications with OOP paradigms, and dynamic database-backed web applications.
                     </p>
                     <div class="year-subjects">
                         <div class="subject-item">
@@ -800,7 +807,7 @@
                 </div>
                 <div class="year-content">
                     <p class="year-desc">
-                        Kasalukuyan akong nasa 3rd year, kung saan nag-aaral ako ng mas advanced na topics — software engineering, systems analysis, at capstone development. Dito na nagsisimula yung mga totoong real-world projects na maghahanda sa akin para sa industry. Kasama na rin dito yung <strong>Capstone Project BSCS 3</strong> at yung <strong>ExamChecker Backend</strong> na ginagawa ko ngayon.
+                        Currently in my 3rd year exploring advanced software architecture, systems analysis, and enterprise capstone engineering. This phase focuses on production-ready systems and real-world deployment readiness, featuring active developments such as <strong>Capstone Project BSCS 3</strong> and the <strong>ExamChecker Backend</strong>.
                     </p>
                     <div class="year-subjects">
                         <div class="subject-item">
@@ -1085,7 +1092,7 @@
 
         <div class="certs-registry-header">
             <span class="reg-label">SYS.REGISTRY // CREDENTIALS</span>
-            <span class="reg-status">● 9 VERIFIED</span>
+            <span class="reg-status">● 10 VERIFIED</span>
         </div>
 
         <div class="certs-grid">
@@ -1259,6 +1266,25 @@
                     <span class="cert-date">2024 <span class="red-dot-small"></span> VERIFIED</span>
                 </div>
             </div>
+
+            <div class="cert-card clickable"
+                 data-image="cyber.png"
+                 data-title="Introduction to Cybersecurity"
+                 data-issuer="Cisco Networking Academy"
+                 data-desc="I earned this certification through the Cisco Networking Academy, which introduced me to the fundamentals of cybersecurity. This course covered essential concepts such as cyber threats, network security, and data protection. Understanding these principles helps me build more secure applications and become a more responsible developer.">
+                <div class="cert-card-header">
+                    <span class="cert-id">ID.10</span>
+                    <span class="cert-platform">CYBERSECURITY</span>
+                </div>
+                <div class="cert-image-wrapper">
+                    <img src="cyber.png" alt="Cybersecurity Certificate">
+                </div>
+                <h4 class="cert-title">Introduction to Cybersecurity</h4>
+                <div class="cert-meta">
+                    <span class="cert-issuer">Cisco</span>
+                    <span class="cert-date">2026 <span class="red-dot-small"></span> VERIFIED</span>
+                </div>
+            </div>
         </div>
 
         <div class="certs-view-more">
@@ -1284,31 +1310,44 @@
         </p>
 
         <div class="contact-links">
+            <!-- GitHub -->
             <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="contact-link">
-                <span class="contact-icon">⌥</span>
+                <div class="contact-icon-wrap"><i class="fa-brands fa-github"></i></div>
                 <div class="contact-info">
                     <span class="contact-label">GITHUB</span>
                     <span class="contact-value">@TayamJhonder</span>
                 </div>
-                <span class="contact-arrow">↗</span>
+                <span class="contact-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
             </a>
 
+            <!-- Email -->
             <a href="mailto:tayamjhondertayam@gmail.com" class="contact-link">
-                <span class="contact-icon">✉</span>
+                <div class="contact-icon-wrap"><i class="fa-solid fa-envelope"></i></div>
                 <div class="contact-info">
                     <span class="contact-label">EMAIL</span>
                     <span class="contact-value">tayamjhondertayam@gmail.com</span>
                 </div>
-                <span class="contact-arrow">↗</span>
+                <span class="contact-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
             </a>
 
-            <a href="https://github.com/TayamJhonder" target="_blank" rel="noopener" class="contact-link">
-                <span class="contact-icon">◈</span>
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="contact-link">
+                <div class="contact-icon-wrap"><i class="fa-brands fa-facebook-f"></i></div>
+                <div class="contact-info">
+                    <span class="contact-label">FACEBOOK</span>
+                    <span class="contact-value">Jhonder Tayam</span>
+                </div>
+                <span class="contact-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            </a>
+
+            <!-- Location -->
+            <a href="https://maps.google.com/?q=Sorsogon+City,Philippines" target="_blank" rel="noopener" class="contact-link">
+                <div class="contact-icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
                 <div class="contact-info">
                     <span class="contact-label">LOCATION</span>
                     <span class="contact-value">Sorsogon City, Philippines</span>
                 </div>
-                <span class="contact-arrow">↗</span>
+                <span class="contact-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
             </a>
         </div>
 
@@ -1348,9 +1387,9 @@
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
-    <script src="script.js"></script>
-    <script src="bg-filings.js"></script>
-
+        <!-- ================= JAVASCRIPT ================= -->
+    <script src="script.js" defer></script>
+    <script src="bg-filings.js" defer></script>
+    <script src="animations.js" defer></script>
 </body>
 </html>
