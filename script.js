@@ -10,6 +10,66 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     /* =====================================================
+       0. MOTION CONTROLS
+       ===================================================== */
+    (function initMotionControls() {
+        const trigger = document.getElementById('motionControlsTrigger');
+        const panel = document.getElementById('motionControlsPanel');
+        const speedInput = document.getElementById('autoScrollSpeed');
+        const speedOutput = document.getElementById('autoScrollSpeedValue');
+        if (!trigger || !panel || !speedInput || !speedOutput) return;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            panel.querySelectorAll('[data-motion-toggle]').forEach(function(button) {
+                button.setAttribute('aria-pressed', 'false');
+                button.querySelector('.motion-toggle-state').textContent = 'OFF';
+            });
+        }
+
+        trigger.addEventListener('click', function() {
+            const expanded = trigger.getAttribute('aria-expanded') === 'true';
+            trigger.setAttribute('aria-expanded', String(!expanded));
+            panel.hidden = expanded;
+        });
+
+        panel.querySelectorAll('[data-motion-toggle]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const enabled = button.getAttribute('aria-pressed') !== 'true';
+                button.setAttribute('aria-pressed', String(enabled));
+                button.querySelector('.motion-toggle-state').textContent = enabled ? 'ON' : 'OFF';
+                window.dispatchEvent(new CustomEvent(
+                    button.dataset.motionToggle === 'swarm' ? 'swarm-setting-change' : 'auto-scroll-setting-change',
+                    { detail: { enabled: enabled } }
+                ));
+            });
+        });
+
+        speedInput.addEventListener('input', function() {
+            const speed = Number(speedInput.value);
+            speedOutput.value = speed + ' px/s';
+            speedOutput.textContent = speed + ' px/s';
+            window.dispatchEvent(new CustomEvent('auto-scroll-speed-change', {
+                detail: { speed: speed }
+            }));
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+                trigger.setAttribute('aria-expanded', 'false');
+                panel.hidden = true;
+                trigger.focus();
+            }
+        });
+
+        document.addEventListener('pointerdown', function(event) {
+            if (!event.target.closest('#motionControls') && trigger.getAttribute('aria-expanded') === 'true') {
+                trigger.setAttribute('aria-expanded', 'false');
+                panel.hidden = true;
+            }
+        });
+    })();
+
+    /* =====================================================
        1. CERTIFICATE MODAL
        ===================================================== */
     const certCards = document.querySelectorAll('.cert-card.clickable');
@@ -376,6 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 activeImg.style.opacity = '1';
                 canvas.style.visibility = 'hidden';
                 state.finished = true;
+                window.dispatchEvent(new Event('profile-assembly-complete'));
                 return;
             }
 
@@ -418,6 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 img.style.opacity = '1';
                 canvas.style.visibility = 'hidden';
                 state.finished = true;
+                window.dispatchEvent(new Event('profile-assembly-complete'));
                 return;
             }
 
@@ -508,6 +570,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadingLinks.length = 0;
                 particles.length = 0;
                 canvas.style.visibility = 'hidden';
+                window.dispatchEvent(new Event('profile-assembly-complete'));
 
                 return;
             }
@@ -668,66 +731,96 @@ document.addEventListener('DOMContentLoaded', function() {
        ===================================================== */
     (function initAutoScroll() {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (prefersReducedMotion.matches) return;
 
-        const SPEED = 18;
+        let maxSpeed = 210;
+        const ACCELERATION = 180;
         const RESUME_DELAY = 6000;
         let direction = 1;
         let paused = false;
+        let enabled = !prefersReducedMotion.matches;
         let lastFrame = 0;
+        let velocity = 0;
         let started = false;
         let scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         let resumeTimer;
 
-        function pauseForInteraction() {
+        function pauseForInteraction(event) {
+            if (event && event.target.closest && event.target.closest('#motionControls')) return;
             paused = true;
+            document.documentElement.classList.remove('auto-scroll-running');
             lastFrame = 0;
+            velocity = 0;
             scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
             clearTimeout(resumeTimer);
             resumeTimer = setTimeout(function() {
                 scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
                 paused = false;
+                if (enabled) document.documentElement.classList.add('auto-scroll-running');
             }, RESUME_DELAY);
         }
 
         function animateScroll(timestamp) {
             if (!lastFrame) lastFrame = timestamp;
-            const elapsed = Math.min(timestamp - lastFrame, 64);
+            const elapsed = Math.min((timestamp - lastFrame) / 1000, 0.05);
             lastFrame = timestamp;
 
-            if (!paused && !document.hidden) {
+            if (enabled && !paused && !document.hidden) {
                 const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-                scrollPosition += direction * SPEED * elapsed / 1000;
+                const distanceToEnd = direction > 0 ? maxScroll - scrollPosition : scrollPosition;
+                const brakingSpeed = Math.sqrt(Math.max(0, distanceToEnd * 2 * ACCELERATION));
+                const desiredVelocity = direction * Math.min(maxSpeed, brakingSpeed);
+                const maxVelocityChange = ACCELERATION * elapsed;
+                velocity += Math.max(-maxVelocityChange, Math.min(maxVelocityChange, desiredVelocity - velocity));
+                scrollPosition += velocity * elapsed;
 
-                if (scrollPosition >= maxScroll) {
-                    scrollPosition = maxScroll;
-                    direction = -1;
-                    window.scrollTo({ top: maxScroll, behavior: 'instant' });
-                } else if (scrollPosition <= 0) {
-                    scrollPosition = 0;
-                    direction = 1;
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                } else {
-                    window.scrollTo({ top: scrollPosition, behavior: 'instant' });
+                if (distanceToEnd <= 0.5 && Math.abs(velocity) <= maxVelocityChange) {
+                    scrollPosition = direction > 0 ? maxScroll : 0;
+                    direction *= -1;
+                    velocity = 0;
                 }
+
+                window.scrollTo({ top: scrollPosition, behavior: 'instant' });
             }
 
             requestAnimationFrame(animateScroll);
         }
 
+        function setEnabled(nextEnabled) {
+            enabled = nextEnabled;
+            clearTimeout(resumeTimer);
+            paused = false;
+            velocity = 0;
+            lastFrame = 0;
+            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            if (enabled && started) {
+                document.documentElement.classList.add('auto-scroll-running');
+            } else {
+                document.documentElement.classList.remove('auto-scroll-running');
+            }
+        }
+
         function startAutoScroll() {
             if (started) return;
             started = true;
+            if (enabled) document.documentElement.classList.add('auto-scroll-running');
             lastFrame = 0;
+            velocity = 0;
             scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
             requestAnimationFrame(animateScroll);
         }
 
+        window.addEventListener('auto-scroll-setting-change', function(event) {
+            setEnabled(Boolean(event.detail.enabled));
+        });
+        window.addEventListener('auto-scroll-speed-change', function(event) {
+            const requestedSpeed = Number(event.detail.speed);
+            if (Number.isFinite(requestedSpeed)) maxSpeed = Math.max(80, Math.min(320, requestedSpeed));
+        });
         window.addEventListener('wheel', pauseForInteraction, { passive: true });
         window.addEventListener('touchstart', pauseForInteraction, { passive: true });
         window.addEventListener('pointerdown', pauseForInteraction, { passive: true });
         window.addEventListener('keydown', pauseForInteraction);
-        window.addEventListener('profile-assembly-start', startAutoScroll, { once: true });
+        window.addEventListener('profile-assembly-complete', startAutoScroll, { once: true });
     })();
 
 });

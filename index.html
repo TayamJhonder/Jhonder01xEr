@@ -1387,9 +1387,33 @@
         </div>
     </div>
 
+    <aside class="motion-controls" id="motionControls">
+        <button class="motion-controls-trigger" id="motionControlsTrigger" type="button" aria-expanded="false" aria-controls="motionControlsPanel">
+            <span class="motion-controls-indicator" aria-hidden="true"></span>
+            <span>MOTION</span>
+        </button>
+        <div class="motion-controls-panel" id="motionControlsPanel" hidden>
+            <div class="motion-controls-heading">
+                <span>PAGE MOTION</span>
+                <span class="motion-controls-caption">PREFERENCES</span>
+            </div>
+            <button class="motion-toggle" type="button" data-motion-toggle="swarm" aria-pressed="true">
+                <span>Mouse swarm</span><span class="motion-toggle-state">ON</span>
+            </button>
+            <button class="motion-toggle" type="button" data-motion-toggle="scroll" aria-pressed="true">
+                <span>Auto scroll</span><span class="motion-toggle-state">ON</span>
+            </button>
+            <label class="motion-speed-control" for="autoScrollSpeed">
+                <span><span>Scroll speed</span><output id="autoScrollSpeedValue" for="autoScrollSpeed">210 px/s</output></span>
+                <input id="autoScrollSpeed" type="range" min="80" max="320" step="10" value="210">
+            </label>
+        </div>
+    </aside>
+
         <!-- ================= JAVASCRIPT ================= -->
     <script src="script.js" defer></script>
     <script src="bg-filings.js" defer></script>
     <script src="animations.js" defer></script>
+    <script src="swarm.js" defer></script>
 </body>
 </html>
